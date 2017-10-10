@@ -34,6 +34,7 @@ int main(void) {
     bool bRun = true;
 
     do {
+		currentDir = mc.pwd();
         std::cout << user << ":" << currentDir << "$ ";
         getline(std::cin, userCommand);
 
@@ -55,7 +56,7 @@ int main(void) {
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";
-				std::cin >> dataInput;
+				std::cin >> dataInput;				
 				fileSystem.createFile(commandArr[1], dataInput);
                 break;
             case 4: // cat
