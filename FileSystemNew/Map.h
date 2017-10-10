@@ -23,7 +23,7 @@ private:
 	File * files;
 
 	int nMaps;
-	int maxMaps;
+	int maxMaps;	
 	std::vector<Map *> vMap;
 
 
@@ -37,7 +37,7 @@ private:
 public:
 	Map();
 	Map(const std::string & name, Map * root = nullptr);
-
+	
 	~Map();
 
 	std::string getName() const;

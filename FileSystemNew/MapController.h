@@ -5,7 +5,7 @@
 
 class MapController
 {
-private:
+private: 
 	Map * root;
 	Map * current;
 
@@ -19,6 +19,8 @@ public:
 	void removeMap(const std::string & name);
 
 	void goToMap(const std::string & name);
+
+	std::string pwd() const;
 };
 
 #endif // !MapC_H

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\MapSystem">
+      <UniqueIdentifier>{65a9d3c1-face-4e2b-b113-75c024f17698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MapSystem">
+      <UniqueIdentifier>{c878505f-b1b5-4532-afd4-f5bacf5a5156}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="block.cpp">
@@ -24,17 +30,17 @@
     <ClCompile Include="filesystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MapController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="memblockdevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="shell.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapController.cpp">
+      <Filter>Source Files\MapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\MapSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,14 +53,14 @@
     <ClInclude Include="filesystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="memblockdevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MapSystem</Filter>
     </ClInclude>
-    <ClInclude Include="memblockdevice.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\MapSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ Map::Map(const std::string& mapName, Map * root)
 Map::~Map()
 {
 	for (size_t i = 0; i < nMaps; i++)
-	{
+	{		
 		delete vMap[i];
 	}
 
@@ -89,7 +89,7 @@ void Map::addFile(const std::string& fileName, int block)
 	{
 		this->expand(files, nFiles, maxFiles * 2);
 		maxFiles *= 2;
-
+		
 		int i = nFiles;
 		this->files[i].fileBlock = block;
 		this->files[i].fileName = fileName;
@@ -114,7 +114,7 @@ void Map::addMap(const std::string & mapName)
 void Map::removeMap(const std::string & name)
 {
 	int index = getMapIndex(name);
-
+	
 	if (index != -1)
 	{
 		vMap[index]->removeEverything();
@@ -142,11 +142,18 @@ void Map::removeEverything()
 
 
 }
+bool Map::fileExist(const std::string & name) const
+{
+	for (int i = 0; i < nFiles; i++)
+	{
+		if (this->files[i].fileName == name)
+			return true;
+	}
+	return false;
+}
 //returns true if the map exists
 bool Map::mapExist(const std::string & name) const
-{
-	if (name.empty())
-		return true;
+{		
 	for (int i = 0; i < nMaps; i++)
 	{
 		if (this->vMap[i]->getName() == name)

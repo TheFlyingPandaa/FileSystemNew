@@ -20,7 +20,7 @@ std::string help();
 /* More functions ... */
 
 int main(void) {
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	FileSystem fileSystem = FileSystem();
 
 	MapController mc = MapController();
@@ -50,8 +50,8 @@ int main(void) {
 				fileSystem.formatSystem();
                 break;
             case 2: // ls
-                std::cout << "Listing directory" << std::endl;
-				mc.getMaps();
+                std::cout << "Listing directory" << std::endl;			
+				std::cout << mc.getMaps();
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";
@@ -81,7 +81,7 @@ int main(void) {
 				mc.goToMap(commandArr[1]);
                 break;
             case 13: // pwd
-				mc.goToMap(commandArr[1]);
+				std::cout << mc.pwd() << std::endl;
                 break;
             case 14: // help
                 std::cout << help() << std::endl;
