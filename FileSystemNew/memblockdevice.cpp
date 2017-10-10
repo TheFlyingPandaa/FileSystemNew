@@ -88,6 +88,12 @@ void MemBlockDevice::reset() {
     }
 }
 
+void MemBlockDevice::singleReset(const int block)
+{
+	this->memBlocks[block].reset('0');
+}
+
+
 int MemBlockDevice::size() const {
     return this->nrOfBlocks;
 }

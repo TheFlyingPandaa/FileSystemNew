@@ -10,6 +10,8 @@ class FileSystem
 private:
     MemBlockDevice mMemblockDevice;
     // Here you can add your own data structures
+
+	
 public:
     FileSystem();
     ~FileSystem();
@@ -20,7 +22,7 @@ public:
 
     /* This function creates a file in the filesystem */
     // createFile(...)
-	void createFile(const std::string &fileName, const std::string &data);
+	void createFile(const std::string &fileName);
 
 	/*Reads a block and outputs to user*/
 	Block readFile();
@@ -32,7 +34,7 @@ public:
     // createFolderi(...);
 
     /* Removes a file in the filesystem */
-    // removeFile(...);
+    void removeFile();
 
     /* Removes a folder in the filesystem */
     // removeFolder(...);

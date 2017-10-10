@@ -28,6 +28,9 @@ public:
     /* Resets all the blocks */
     void reset();
 
+	/* Resets a single block */
+	void singleReset(const int block);
+
     /* Return the size */
     int size() const;
 };
