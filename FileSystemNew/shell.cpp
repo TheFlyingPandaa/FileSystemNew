@@ -25,7 +25,6 @@ int main(void) {
 
 	MapController mc = MapController();
 
-
 	std::string userCommand, commandArr[MAXCOMMANDS];
 	std::string user = "user@DV1492";    // Change this if you want another user to be displayed
 	std::string currentDir = "/";    // current directory, used for output
@@ -56,8 +55,7 @@ int main(void) {
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";
-				std::cin >> dataInput;				
-				fileSystem.createFile(commandArr[1], dataInput);
+				fileSystem.createFile(commandArr[1]);
                 break;
             case 4: // cat
 				std::cout << fileSystem.readFile().toString() << std::endl;
