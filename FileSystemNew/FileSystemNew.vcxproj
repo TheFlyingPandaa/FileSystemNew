@@ -139,6 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="block.cpp" />
+    <ClCompile Include="blockdevice.cpp" />
+    <ClCompile Include="filesystem.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapController.cpp" />
+    <ClCompile Include="memblockdevice.cpp" />
+    <ClCompile Include="shell.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="block.h" />
+    <ClInclude Include="blockdevice.h" />
+    <ClInclude Include="filesystem.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapController.h" />
+    <ClInclude Include="memblockdevice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
