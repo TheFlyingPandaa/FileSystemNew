@@ -5,12 +5,11 @@
 void Map::init()
 {
 	nFiles = 0;
-	files = new File[2];
-	maxFiles = 2;
+	vFiles = std::vector<File *>();
 
 	nMaps = 0;
 	vMap = std::vector<Map *>();
-	maxMaps = 2;
+
 }
 
 
@@ -36,9 +35,10 @@ Map::~Map()
 	{		
 		delete vMap[i];
 	}
-
-	if (nFiles > 0)
-		delete[] files;
+	for (size_t i = 0; i < nFiles; i++)
+	{
+		delete vFiles[i];
+	}
 }
 
 
@@ -61,39 +61,36 @@ std::string Map::getName() const
 {
 	return this->mapName;
 }
-//-----------------------------------------	Files
+//-----------------------------------------	vFiles
 int Map::getFilesSize() const
 {
 	return nFiles;
 }
-//return the name on all the files
+//return the name on all the vFiles
 std::string * Map::getFilesNames() const
 {
 	std::string * arr = new std::string[nFiles];
 	for (size_t i = 0; i < nFiles; i++)
 	{
-		arr[i] = files[i].fileName;
+		arr[i] = vFiles[i]->fileName;
 	}
 	return arr;
 }
 
-void Map::addFile(const std::string& fileName, int block)
+std::vector<File*> Map::getFiles() const
 {
+	return vFiles;
+}
 
-	if (nFiles < maxFiles) {
-		int i = nFiles;
-		this->files[i].fileBlock = block;
-		this->files[i].fileName = fileName;
-	}
-	else
+void Map::addFile(const std::string& fileName, int nrOfBlocks, int * blocks)
+{				
+	for (int i = 0; i < nrOfBlocks; i++)
 	{
-		this->expand(files, nFiles, maxFiles * 2);
-		maxFiles *= 2;
-		
-		int i = nFiles;
-		this->files[i].fileBlock = block;
-		this->files[i].fileName = fileName;
+		printf("%d ", blocks[i]);
 	}
+
+	this->vFiles.push_back(new File(fileName, nrOfBlocks, blocks));
+	nFiles++;
 }
 //-----------------------------------------	Maps
 int Map::getMapsSize() const
@@ -136,9 +133,12 @@ void Map::removeEverything()
 	{
 		delete vMap[i];
 	}
+	for (size_t i = 0; i < nFiles; i++)
+	{
+		delete vFiles[i];
+	}
 	nMaps = 0;
 	nFiles = 0;
-	delete[] files;
 
 
 }
@@ -146,7 +146,7 @@ bool Map::fileExist(const std::string & name) const
 {
 	for (int i = 0; i < nFiles; i++)
 	{
-		if (this->files[i].fileName == name)
+		if (this->vFiles[i]->fileName == name)
 			return true;
 	}
 	return false;

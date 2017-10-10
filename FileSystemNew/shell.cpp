@@ -37,6 +37,7 @@ int main(void) {
         std::cout << user << ":" << currentDir << "$ ";
         getline(std::cin, userCommand);
 
+
         int nrOfCommands = parseCommandString(userCommand, commandArr);
         if (nrOfCommands > 0) {
 
@@ -51,7 +52,7 @@ int main(void) {
                 break;
             case 2: // ls
                 std::cout << "Listing directory" << std::endl;			
-				std::cout << mc.getMaps();
+				std::cout << mc.ls();
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";

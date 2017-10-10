@@ -1,14 +1,19 @@
 #ifndef Map_h
 #define Map_h
 #include <string>
-//#include <iostream>
 #include <vector>
 #include <string.h>
 
 
 struct File
 {
-	int fileBlock;
+	File(const std::string& name, int n, int * file) {
+		this->fileName = name;
+		this->nrOfBlocks = n;
+		this->fileBlocks = file;
+	}
+	int nrOfBlocks;
+	int * fileBlocks;
 	std::string fileName;
 };
 
@@ -20,15 +25,12 @@ private:
 
 	int nFiles;
 	int maxFiles;
-	File * files;
+	std::vector<File *> vFiles;
+
 
 	int nMaps;
 	int maxMaps;	
 	std::vector<Map *> vMap;
-
-
-	template <typename T>
-	void expand(T*& arr, int size, int target);
 
 	void init();
 
@@ -42,12 +44,13 @@ public:
 
 	std::string getName() const;
 	std::string * getFilesNames() const;
+	std::vector<File *> getFiles() const;
 	int getFilesSize() const;
 
 	std::vector<Map*> getMaps() const;
 	int getMapsSize() const;
 
-	void addFile(const std::string& fileName, int block);
+	void addFile(const std::string& fileName, int nrOfBlocks, int * block);
 	void addMap(const std::string& mapName);
 
 	void removeMap(const std::string& name);
@@ -61,20 +64,5 @@ public:
 	Map * getRoot() const;
 };
 
-
-template<typename T>
-inline void Map::expand(T *& arr, int size, int target)
-{
-
-	printf("Map array has been expanded\n");
-	T * newArr = new T[target];
-	for (size_t i = 0; i < size; i++)
-	{
-		newArr[i] = arr[i];
-	}
-	delete[] arr;
-
-	arr = newArr;
-}
 
 #endif // !Map_H

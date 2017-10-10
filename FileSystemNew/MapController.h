@@ -9,11 +9,22 @@ private:
 	Map * root;
 	Map * current;
 
+	int pos;
+	int blockesUsed;
+	unsigned int nrOfBlocks;
+	bool * blocks;
+
+	int * getBlocks(int nrOfBlocks);
+	std::string getMaps() const;
+	std::string getFiles() const;
+
 public:
-	MapController();
+	MapController(int nrOfBlocks = 250);
 	~MapController();
 
-	std::string getMaps() const;
+	std::string ls() const;
+
+	void addFile(const std::string & name, int nrOfBlocks);
 
 	void createMap(const std::string & name);
 	void removeMap(const std::string & name);

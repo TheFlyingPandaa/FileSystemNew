@@ -2,17 +2,34 @@
 
 
 
-MapController::MapController()
+
+MapController::MapController(int nrOfBlocks)
 {
 	root = new Map();
 	current = root;
-}
 
+	this->nrOfBlocks = nrOfBlocks;
+	blocks = new bool[nrOfBlocks];
+
+	for (int i = 0; i < this->nrOfBlocks; i++)
+		blocks[i] = false;
+
+	pos = 0;
+	blockesUsed = 0;
+}
 
 MapController::~MapController()
 {
 	root->removeEverything();
 	delete root;
+}
+
+std::string MapController::ls() const
+{
+	std::string string = "Type\tName\tSize\n";
+	string += getMaps();
+	string += getFiles();
+	return string;
 }
 
 std::string MapController::getMaps() const
@@ -22,11 +39,56 @@ std::string MapController::getMaps() const
 
 	for (size_t i = 0; i < size; i++)
 	{
-		s += current->getMaps()[i]->getName();		
+		s += "DIR\t";
+		s += current->getMaps()[i]->getName() + "\t";	
+		s += "-";
 		s += "\n";
 	}
 
 	return s;
+}
+
+std::string MapController::getFiles() const
+{
+	int size = current->getFilesSize();
+	std::string s = "";
+	for (size_t i = 0; i < size; i++)
+	{
+		s += "FILE\t";
+		s += current->getFiles()[i]->fileName + "\t";
+		s += std::to_string(current->getFiles()[i]->nrOfBlocks);
+		s += "\n";
+	}
+
+	return s;
+}
+
+void MapController::addFile(const std::string & name, int nrOfBlocks)
+{
+	if (!current->fileExist(name) && !name.empty())
+	{
+		int * nBlocks = this->getBlocks(nrOfBlocks);
+		if (nBlocks != nullptr)
+			current->addFile(name, nrOfBlocks, nBlocks);
+	}
+}
+int * MapController::getBlocks(int nrOfBlocks)
+{
+	if (this->blockesUsed < this->nrOfBlocks && 
+		this->nrOfBlocks - this->blockesUsed > nrOfBlocks) {
+		int i = 0;
+		int * nBlocks = new int[nrOfBlocks];
+		while (i < nrOfBlocks)
+		{
+			if (!this->blocks[pos]) {
+				this->blocks[pos] = true;
+				nBlocks[i++] = pos;
+			}
+			pos++ % this->nrOfBlocks;
+		}
+		return nBlocks;
+	}
+	return nullptr;
 }
 
 void MapController::createMap(const std::string & name)
