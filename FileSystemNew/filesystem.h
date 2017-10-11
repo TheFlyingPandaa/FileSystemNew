@@ -27,10 +27,10 @@ public:
 
     /* This function creates a file in the filesystem */
     // createFile(...)
-	void createFile(const std::string &fileName);
+	void createFile(const std::string &fileName, const std::string user);
 
 	/*Reads a block and outputs to user*/
-	Block readFile();
+	Block readFile(const std::string user);
 
 	/*Formating the hole file system*/
 	void formatSystem();

@@ -6,7 +6,7 @@
  */
 
 #include "block.h"
-
+#include <string>
 class BlockDevice
 {
 protected:
@@ -19,10 +19,11 @@ public:
 
     virtual ~BlockDevice();
     virtual int spaceLeft() const = 0;
-    virtual int writeBlock(int blockNr, const std::vector<char> &vec) = 0;
-    virtual int writeBlock(int blockNr, const std::string &strBlock) = 0;
-    virtual int writeBlock(int blockNr, const char cArr[]) = 0;
+    virtual int writeBlock(int blockNr, const std::vector<char> &vec, const std::string newOwner) = 0;
+    virtual int writeBlock(int blockNr, const std::string &strBlock, const std::string newOwner) = 0;
+    virtual int writeBlock(int blockNr, const char cArr[], const std::string newOwner) = 0;
     virtual Block readBlock(int blockNr) const = 0;
+	virtual std::string getOwner(int blockNr) const = 0;
     virtual void reset() = 0;
     virtual int size() const = 0;
 };

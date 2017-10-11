@@ -19,7 +19,7 @@ FileSystem::~FileSystem() {
 	delete mapController;
 }
 
-void FileSystem::createFile(const std::string & fileName)
+void FileSystem::createFile(const std::string & fileName, const std::string user)
 {
 	//int * blockArray;
 	//mapController->addFile(fileName, nrOfBlocks, blockArray, fileSize);
@@ -43,7 +43,7 @@ void FileSystem::createFile(const std::string & fileName)
 	if (fileName.size() > 0)
 	{
 
-		//Om vi ska ha C++;) så ska detta tasbort
+		//Om vi ska ha C++;) så ska detta tasbort "typ inte"
 		if (data.size() < 512)
 		{
 
@@ -63,7 +63,7 @@ void FileSystem::createFile(const std::string & fileName)
 			//}
 
 			
-			mMemblockDevice.writeBlock(0, newString);
+			mMemblockDevice.writeBlock(0, newString, user);
 			std::cout << "DEBUG_MSG: it finnished" << std::endl;
 		}
 		else
@@ -100,7 +100,7 @@ void FileSystem::createFile(const std::string & fileName)
 			//findEmptyBlocks(amountBlocks);
 			//STOP PSUDO
 			for (int i = 0; i < amountBlocks; i++) {
-				mMemblockDevice.writeBlock(i, blocks[i]);
+				mMemblockDevice.writeBlock(i, blocks[i], user);
 			}
 
 			delete[] blocks;
@@ -109,9 +109,9 @@ void FileSystem::createFile(const std::string & fileName)
 	}
 }
 
-Block FileSystem::readFile()
+Block FileSystem::readFile(const std::string user)
 {
-
+	std::cout << mMemblockDevice.getOwner(0) << std::endl;
 	Block block = mMemblockDevice.readBlock(0);
 	//std::cout << block.toString() << std::endl;
 	//block = mMemblockDevice.readBlock(1);

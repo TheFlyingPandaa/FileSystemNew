@@ -18,13 +18,14 @@ public:
     int spaceLeft() const;
 
     /* Writes a block */
-    int writeBlock(int blockNr, const std::vector<char> &vec);
-    int writeBlock(int blockNr, const std::string &strBlock);
-    int writeBlock(int blockNr, const char cArr[]);     // Use with care, make sure that cArr has at least the same dimension as block
+    int writeBlock(int blockNr, const std::vector<char> &vec, const std::string newOwner);
+    int writeBlock(int blockNr, const std::string &strBlock, const std::string newOwner);
+    int writeBlock(int blockNr, const char cArr[], const std::string newOwner);     // Use with care, make sure that cArr has at least the same dimension as block
 
     /* Reads a block */
     Block readBlock(int blockNr) const;
 
+	std::string getOwner(int blockNr) const;
     /* Resets all the blocks */
     void reset();
 

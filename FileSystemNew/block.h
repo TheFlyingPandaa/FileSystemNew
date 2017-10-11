@@ -4,12 +4,15 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
+#include <string>
 class Block
 {
 private:
     char *block;
     int nrOfElements;
+
+	std::string owner;
+	
 
 public:
     /* Constructor */
@@ -33,10 +36,12 @@ public:
     int size() const;   // returns the size
     Block readBlock() const;    // Returns a copy of block
 
+	std::string getOwner() const;
+
     /* Write a block */
-    int writeBlock(const std::string &strBlock);
-    int writeBlock(const std::vector<char> &vec);
-    void writeBlock(const char cArr[]);     // Use with caution! Make sure that cArr is at least as large as private member block.
+    int writeBlock(const std::string &strBlock, const std::string newOwner);
+    int writeBlock(const std::vector<char> &vec, const std::string newOwner);
+    void writeBlock(const char cArr[], const std::string newOwner);     // Use with caution! Make sure that cArr is at least as large as private member block.
 
     std::string toString() const;
 };

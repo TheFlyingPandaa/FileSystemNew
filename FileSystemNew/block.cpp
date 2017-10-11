@@ -13,6 +13,8 @@ Block::Block(int size) {
 
     // Sets everything to 0
     this->reset();
+
+	owner = "NULL";
 }
 
 Block::Block(const Block &other) {
@@ -57,25 +59,32 @@ Block Block::readBlock() const {
     return Block(*this);
 }
 
-int Block::writeBlock(const std::string &strBlock) {
+std::string Block::getOwner() const
+{
+	return this->owner;
+}
+
+int Block::writeBlock(const std::string &strBlock, const std::string newOwner) {
     int output = -2;    // Assume out of range
     if (strBlock.size() == (unsigned long)this->nrOfElements) {
         for (int i = 0; i < this->nrOfElements; ++i) {
             this->block[i] = strBlock[i];
         }
         output = 1;
+		this->owner = newOwner;
     }
 
     return output;
 }
 
-int Block::writeBlock(const std::vector<char> &vec) {
+int Block::writeBlock(const std::vector<char> &vec, const std::string newOwner) {
     int output = -2; // Assume not the same dimension
     if (vec.size() == (unsigned long)this->nrOfElements) {
         for (unsigned long int i = 0; i < vec.size(); ++i) {
            this->block[i] = vec[i];
         }
         output = 1;
+		this->owner = newOwner;
     }
 //    else {
 //        throw std::out_of_range("vector and block not the same dimension");
@@ -83,10 +92,11 @@ int Block::writeBlock(const std::vector<char> &vec) {
     return output;
 }
 
-void Block::writeBlock(const char cArr[]) {
+void Block::writeBlock(const char cArr[], const std::string newOwner) {
     for (int i = 0; i < this->nrOfElements; ++i) {
         this->block[i] = cArr[i];
     }
+	this->owner = newOwner;
 }
 
 std::string Block::toString() const {

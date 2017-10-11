@@ -24,7 +24,7 @@ int main(void) {
 	FileSystem fileSystem = FileSystem();
 
 	std::string userCommand, commandArr[MAXCOMMANDS];
-	std::string user = "user@DV1492";    // Change this if you want another user to be displayed
+	std::string user = "user@JIM";    // JIMMMMMMMMMM
 	std::string currentDir = "/";    // current directory, used for output
 
 	std::string dataInput;
@@ -55,10 +55,10 @@ int main(void) {
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";
-				fileSystem.createFile(commandArr[1]);
+				fileSystem.createFile(commandArr[1], user);
                 break;
             case 4: // cat
-				std::cout << fileSystem.readFile().toString() << std::endl;
+				std::cout << fileSystem.readFile(user).toString() << std::endl;
                 break;
             case 5: // createImage
                 break;

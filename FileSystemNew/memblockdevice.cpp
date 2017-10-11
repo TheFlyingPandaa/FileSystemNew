@@ -61,34 +61,34 @@ int MemBlockDevice::spaceLeft() const {
     
 }
 
-int MemBlockDevice::writeBlock(int blockNr, const std::vector<char> &vec) {
+int MemBlockDevice::writeBlock(int blockNr, const std::vector<char> &vec, const std::string newOwner) {
     int output = -1;    // Assume blockNr out-of-range
 
     if (blockNr < this->nrOfBlocks && blockNr >= 0) {
         /* -2 = vec and block dont have same dimensions */
         /* 1 = success */
-        output = this->memBlocks[blockNr].writeBlock(vec);
+        output = this->memBlocks[blockNr].writeBlock(vec, newOwner);
     }
     return output;
 }
 
-int MemBlockDevice::writeBlock(int blockNr, const std::string &strBlock) {
+int MemBlockDevice::writeBlock(int blockNr, const std::string &strBlock, const std::string newOwner) {
     int output = -1;    // Assume blockNr out-of-range
 
     if (blockNr < this->nrOfBlocks && blockNr >= 0) {
         /* -2 = str-length and block dont have same dimensions */
         /* 1 = success */
-        output = this->memBlocks[blockNr].writeBlock(strBlock);
+        output = this->memBlocks[blockNr].writeBlock(strBlock, newOwner);
     }
     return output;
 }
 
-int MemBlockDevice::writeBlock(int blockNr, const char cArr[]) {
+int MemBlockDevice::writeBlock(int blockNr, const char cArr[], const std::string newOwner) {
     int output = -1;    // Assume blockNr out-of-range
     if (blockNr < this->nrOfBlocks && blockNr >= 0) {
         output = 1;
         // Underlying function writeBlock cannot check array-dimension.
-        this->memBlocks[blockNr].writeBlock(cArr);
+        this->memBlocks[blockNr].writeBlock(cArr, newOwner);
     }
     return output;
 }
@@ -100,6 +100,11 @@ Block MemBlockDevice::readBlock(int blockNr) const {
         Block a(this->memBlocks[blockNr]);
         return a;
     }
+}
+
+std::string MemBlockDevice::getOwner(int blockNr) const
+{
+	return memBlocks[blockNr].getOwner();
 }
 
 /* Resets all the blocks */
