@@ -5,6 +5,7 @@
 #include "MapController.h"
 #include <string>
 #include <iostream>
+#include <vector>
 
 class FileSystem
 {
@@ -14,6 +15,7 @@ private:
 
 	MapController * mapController;
 
+	std::vector<int> openBlocks;
 	
 public:
     FileSystem();
@@ -35,6 +37,8 @@ public:
 
     /* Creates a folder in the filesystem */
     // createFolderi(...);
+
+	int amountOfBlocksFree() const;
 
     /* Removes a file in the filesystem */
     void removeFile();

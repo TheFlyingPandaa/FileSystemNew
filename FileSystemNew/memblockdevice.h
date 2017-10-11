@@ -1,7 +1,7 @@
 #ifndef MEMBLOCKDEVICE_H
 #define MEMBLOCKDEVICE_H
 #include "blockdevice.h"
-
+#include <vector>
 class MemBlockDevice: public BlockDevice
 {
 public:

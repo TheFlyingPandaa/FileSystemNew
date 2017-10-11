@@ -36,8 +36,29 @@ Block& MemBlockDevice::operator[](int index) const {
 }
 
 int MemBlockDevice::spaceLeft() const {
-    /* Not yet implemented */
-    return 0;
+    
+	int amountOfSpace = 0;
+
+	for (int i = 0; i < 250; i++)
+	{
+		std::string tempString;
+		tempString = memBlocks[i].readBlock().toString();
+		int checkSum = 512;
+		for (int j = 0; j < 512; j++) //512 = block size
+		{
+			if (tempString[j] == '0')
+			{
+				checkSum--;
+			}
+		}
+		if (checkSum == 0)
+		{
+			amountOfSpace++;
+		}
+	}
+
+	return amountOfSpace;
+    
 }
 
 int MemBlockDevice::writeBlock(int blockNr, const std::vector<char> &vec) {

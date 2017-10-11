@@ -11,6 +11,8 @@ FileSystem::FileSystem() {
 	mapController->goToMap("3");
 	mapController->addFile("4", 123, 123 * 512);
 	mapController->getFile("/1/2/3/4");
+
+	openBlocks = std::vector<int>(250, 0); //250 amount of blocks
 }
 
 FileSystem::~FileSystem() {
@@ -134,6 +136,12 @@ void FileSystem::removeFile()
 
 
 }
+
+int FileSystem::amountOfBlocksFree() const
+{
+	return mMemblockDevice.spaceLeft();
+}
+
 
 
 
