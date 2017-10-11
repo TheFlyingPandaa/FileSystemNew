@@ -35,6 +35,8 @@ int main(void) {
         std::cout << user << ":" << currentDir << "$ ";
         getline(std::cin, userCommand);		
 
+		
+
         int nrOfCommands = parseCommandString(userCommand, commandArr);
         if (nrOfCommands > 0) {
 

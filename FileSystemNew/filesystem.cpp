@@ -3,7 +3,14 @@
 FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
 	mapController = new MapController();
-	mapController->addFile("1", 123, 123 * 512);
+	mapController->createMap("1");
+	mapController->goToMap("1");
+	mapController->createMap("2");
+	mapController->goToMap("2");
+	mapController->createMap("3");
+	mapController->goToMap("3");
+	mapController->addFile("4", 123, 123 * 512);
+	mapController->getFile("/1/2/3/4");
 }
 
 FileSystem::~FileSystem() {

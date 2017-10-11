@@ -83,6 +83,25 @@ void MapController::goToMap(const std::string & name)
 		current = current->getMaps()[current->getMapIndex(name)];
 	}
 }
+File * MapController::getFile(const std::string & path) const
+{
+	Map * walker = root;
+	
+	std::string * arr = splitPath(path);
+	std::string nextPath;
+
+	while (/*!arr[1].empty() &&*/ arr[1].length() > 0)
+	{
+		std::cout << arr[0] << " " << arr[1] << std::endl;
+		walker->addMap(arr[0]);
+		nextPath = arr[1];
+		delete[] arr;
+		arr = splitPath(nextPath);
+	}
+	delete[] arr;
+
+	return nullptr;
+}
 std::string MapController::pwd() const
 {
 	int size = 0;
@@ -174,4 +193,24 @@ int * MapController::getBlocks(int nrOfBlocks)
 		return nBlocks;
 	}
 	return nullptr;
+}
+
+std::string * MapController::splitPath(const std::string & path) const
+{
+	std::string * retString = new std::string[2];
+
+	int index;
+
+	if (path[0] == '/')
+		index = 1;
+	else
+		index = 0;
+	do {
+		retString[0] += path[index++];
+	} while (path[index] != '/' && index < path.length());
+	
+	while (index < path.length())	
+		retString[1] += path[index++];
+
+	return retString;
 }
