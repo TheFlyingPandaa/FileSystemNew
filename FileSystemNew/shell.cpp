@@ -35,8 +35,7 @@ int main(void) {
     do {
 		currentDir = mc.pwd();
         std::cout << user << ":" << currentDir << "$ ";
-        getline(std::cin, userCommand);
-
+        getline(std::cin, userCommand);		
 
         int nrOfCommands = parseCommandString(userCommand, commandArr);
         if (nrOfCommands > 0) {

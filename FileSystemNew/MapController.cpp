@@ -22,6 +22,7 @@ MapController::~MapController()
 {
 	root->removeEverything();
 	delete root;
+	delete[] blocks;
 }
 
 std::string MapController::ls() const
@@ -56,20 +57,40 @@ std::string MapController::getFiles() const
 	{
 		s += "FILE\t";
 		s += current->getFiles()[i]->fileName + "\t";
-		s += std::to_string(current->getFiles()[i]->nrOfBlocks);
+		s += this->byteToKB(current->getFiles()[i]->bytes);
 		s += "\n";
 	}
 
 	return s;
 }
 
-void MapController::addFile(const std::string & name, int nrOfBlocks)
+std::string MapController::byteToKB(const int & bytes) const
+{
+	return std::to_string(bytes / 1000) + "." + std::to_string(bytes % 1000) + " KB";
+}
+
+void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes)
 {
 	if (!current->fileExist(name) && !name.empty())
 	{
 		int * nBlocks = this->getBlocks(nrOfBlocks);
-		if (nBlocks != nullptr)
-			current->addFile(name, nrOfBlocks, nBlocks);
+		if (nBlocks != nullptr) {
+			current->addFile(name, nrOfBlocks, nBlocks, bytes);
+			this->blockesUsed++;
+		}
+	}
+}
+void MapController::removeFile(const std::string & name)
+{
+	if (current->fileExist(name) && !name.empty()) {
+		File * f = current->getFile(current->getFileIndex(name));
+
+		for (int i = 0; i < f->nrOfBlocks; i++)
+		{
+			this->blocks[f->fileBlocks[i]] = false;
+			this->blockesUsed -= f->nrOfBlocks;
+		}
+		current->removeFile(name);
 	}
 }
 int * MapController::getBlocks(int nrOfBlocks)

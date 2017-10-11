@@ -18,13 +18,16 @@ private:
 	std::string getMaps() const;
 	std::string getFiles() const;
 
+	std::string byteToKB(const int & bytes) const;
+
 public:
 	MapController(int nrOfBlocks = 250);
 	~MapController();
 
 	std::string ls() const;
 
-	void addFile(const std::string & name, int nrOfBlocks);
+	void addFile(const std::string & name, int nrOfBlocks, int byts = 0);
+	void removeFile(const std::string & name);
 
 	void createMap(const std::string & name);
 	void removeMap(const std::string & name);
