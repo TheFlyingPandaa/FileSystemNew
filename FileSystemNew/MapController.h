@@ -1,7 +1,6 @@
 #ifndef MapC_H
 #define MapC_H
 #include "Map.h"
-#include <iostream>
 
 class MapController
 {
@@ -27,6 +26,7 @@ public:
 	std::string ls() const;
 
 	void addFile(const std::string & name, int nrOfBlocks, int byts = 0);
+	void addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize = 0);
 	void removeFile(const std::string & name);
 
 	void createMap(const std::string & name);

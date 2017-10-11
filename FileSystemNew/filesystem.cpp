@@ -2,15 +2,19 @@
 
 FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
-	
+	mapController = new MapController();
 }
 
 FileSystem::~FileSystem() {
-
+	delete mapController;
 }
 
 void FileSystem::createFile(const std::string & fileName)
 {
+	int * blockArray;
+	//mapController->addFile(fileName, nrOfBlocks, blockArray, fileSize);
+	//Pretty please use this when adding files :D
+
 
 	//std::string data = "test";
 	//data.resize(1024, 'a');
@@ -115,4 +119,32 @@ void FileSystem::removeFile()
 }
 
 
+
 /* Please insert your code */
+
+//-----------------------------------	Map Controller Functions
+
+void FileSystem::mkdir(const std::string & mapName)
+{
+	mapController->createMap(mapName);
+}
+
+void FileSystem::rm(const std::string & mapName)
+{
+	mapController->removeMap(mapName);
+}
+
+void FileSystem::cd(const std::string & mapName)
+{
+	mapController->goToMap(mapName);
+}
+
+std::string FileSystem::pwd()
+{
+	return mapController->pwd();
+}
+
+std::string FileSystem::ls()
+{
+	return mapController->ls();
+}

@@ -23,7 +23,7 @@ int main(void) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	FileSystem fileSystem = FileSystem();
 
-	MapController mc = MapController();
+	//MapController mc = MapController();
 
 	std::string userCommand, commandArr[MAXCOMMANDS];
 	std::string user = "user@DV1492";    // Change this if you want another user to be displayed
@@ -33,7 +33,7 @@ int main(void) {
     bool bRun = true;
 
     do {
-		currentDir = mc.pwd();
+		currentDir = fileSystem.pwd();
         std::cout << user << ":" << currentDir << "$ ";
         getline(std::cin, userCommand);		
 
@@ -50,8 +50,8 @@ int main(void) {
 				fileSystem.formatSystem();
                 break;
             case 2: // ls
-                std::cout << "Listing directory" << std::endl;			
-				std::cout << mc.ls();
+                std::cout << "Listing directory" << std::endl;						
+				std::cout << fileSystem.ls();
                 break;
             case 3: // create
 				std::cout << "Enter Data: ";
@@ -65,7 +65,7 @@ int main(void) {
             case 6: // restoreImage
                 break;
             case 7: // rm
-				mc.removeMap(commandArr[1]);
+				fileSystem.rm(commandArr[1]);
                 break;
             case 8: // cp
                 break;
@@ -74,13 +74,13 @@ int main(void) {
             case 10: // mv
                 break;
             case 11: // mkdir
-				mc.createMap(commandArr[1]);
+				fileSystem.mkdir(commandArr[1]);
                 break;
             case 12: // cd
-				mc.goToMap(commandArr[1]);
+				fileSystem.cd(commandArr[1]);
                 break;
             case 13: // pwd
-				std::cout << mc.pwd() << std::endl;
+				std::cout << fileSystem.pwd() << std::endl;
                 break;
             case 14: // help
                 std::cout << help() << std::endl;

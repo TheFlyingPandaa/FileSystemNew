@@ -80,6 +80,18 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes)
 		}
 	}
 }
+void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize)
+{
+	if (!current->fileExist(name) && !name.empty())
+	{
+		int * nBlocks = this->getBlocks(nrOfBlocks);
+		if (nBlocks != nullptr) {
+			current->addFile(name, nrOfBlocks, nBlocks, fileSize);
+			this->blockesUsed++;
+		}
+		blocks = nBlocks;
+	}
+}
 void MapController::removeFile(const std::string & name)
 {
 	if (current->fileExist(name) && !name.empty()) {

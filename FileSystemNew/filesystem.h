@@ -2,6 +2,7 @@
 #define FILESYSTEM_H
 
 #include "memblockdevice.h"
+#include "MapController.h"
 #include <string>
 #include <iostream>
 
@@ -10,6 +11,8 @@ class FileSystem
 private:
     MemBlockDevice mMemblockDevice;
     // Here you can add your own data structures
+
+	MapController * mapController;
 
 	
 public:
@@ -46,6 +49,13 @@ public:
     // listDir(...);
 
     /* Add your own member-functions if needed */
+
+	//-----------------------------------	Map Controller Functions
+	void mkdir(const std::string & mapName);
+	void rm(const std::string & mapName);
+	void cd(const std::string & mapName);
+	std::string pwd();
+	std::string ls();
 };
 
 #endif // FILESYSTEM_H
