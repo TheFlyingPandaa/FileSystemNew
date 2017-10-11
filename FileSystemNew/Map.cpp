@@ -12,7 +12,6 @@ void Map::init()
 
 }
 
-
 Map::Map()
 {
 	this->mapName = "root";
@@ -20,7 +19,6 @@ Map::Map()
 
 	init();
 }
-
 Map::Map(const std::string& mapName, Map * root)
 {
 	this->mapName = mapName;
@@ -28,7 +26,6 @@ Map::Map(const std::string& mapName, Map * root)
 
 	init();
 }
-
 Map::~Map()
 {
 	for (size_t i = 0; i < nMaps; i++)
@@ -42,56 +39,23 @@ Map::~Map()
 	}
 }
 
+//-----------------------------------------------	Map info
 
-//Simply returns the index of the map based on the name
-int Map::getMapIndex(const std::string & name)
-{
-	for (int i = 0; i < nMaps; i++)
-	{
-		if (vMap[i]->getName() == name)
-			return i;
-	}
-	return -1;
-}
-int Map::getFileIndex(const std::string & name)
-{
-	for (int i = 0; i < nFiles; i++)
-	{
-		if (vFiles[i]->fileName == name)
-			return i;
-	}
-	return -1;
-}
 Map * Map::getRoot() const
 {
 	return this->root;
 }
-//Returns the name of the map
 std::string Map::getName() const
 {
 	return this->mapName;
 }
-//-----------------------------------------	vFiles
-int Map::getFilesSize() const
-{
-	return nFiles;
-}
-//return the name on all the vFiles
-std::string * Map::getFilesNames() const
-{
-	std::string * arr = new std::string[nFiles];
-	for (size_t i = 0; i < nFiles; i++)
-	{
-		arr[i] = vFiles[i]->fileName;
-	}
-	return arr;
-}
+
+//-----------------------------------------------	Files
 
 std::vector<File*> Map::getFiles() const
 {
 	return vFiles;
 }
-
 File * Map::getFile(const int & index) const
 {
 	if (index < nFiles)
@@ -115,11 +79,33 @@ void Map::removeFile(const std::string & fileName)
 		nFiles--;
 	}
 }
-//-----------------------------------------	Maps
-int Map::getMapsSize() const
+
+bool Map::fileExist(const std::string & name) const
 {
-	return nMaps;
+	for (int i = 0; i < nFiles; i++)
+	{
+		if (this->vFiles[i]->fileName == name)
+			return true;
+	}
+	return false;
 }
+
+int Map::getFilesSize() const
+{
+	return nFiles;
+}
+int Map::getFileIndex(const std::string & name)
+{
+	for (int i = 0; i < nFiles; i++)
+	{
+		if (vFiles[i]->fileName == name)
+			return i;
+	}
+	return -1;
+}
+
+//-----------------------------------------------	Maps
+
 std::vector<Map*> Map::getMaps() const
 {
 	return vMap;
@@ -145,6 +131,33 @@ void Map::removeMap(const std::string & name)
 	vMap.shrink_to_fit();
 
 }
+
+bool Map::mapExist(const std::string & name) const
+{		
+	for (int i = 0; i < nMaps; i++)
+	{
+		if (this->vMap[i]->getName() == name)
+			return true;
+	}
+	return false;
+}
+
+int Map::getMapsSize() const
+{
+	return nMaps;
+}
+int Map::getMapIndex(const std::string & name)
+{
+	for (int i = 0; i < nMaps; i++)
+	{
+		if (vMap[i]->getName() == name)
+			return i;
+	}
+	return -1;
+}
+
+//-----------------------------------------------	plz no memory leaks
+
 void Map::removeEverything()
 {
 	for (int i = 0; i < nMaps; i++)
@@ -165,23 +178,4 @@ void Map::removeEverything()
 	nFiles = 0;
 
 
-}
-bool Map::fileExist(const std::string & name) const
-{
-	for (int i = 0; i < nFiles; i++)
-	{
-		if (this->vFiles[i]->fileName == name)
-			return true;
-	}
-	return false;
-}
-//returns true if the map exists
-bool Map::mapExist(const std::string & name) const
-{		
-	for (int i = 0; i < nMaps; i++)
-	{
-		if (this->vMap[i]->getName() == name)
-			return true;
-	}
-	return false;
 }

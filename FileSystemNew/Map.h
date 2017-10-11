@@ -22,51 +22,58 @@ struct File
 class Map
 {
 private:
-	std::string mapName;
+
 	Map * root;
+	std::string mapName;
 
 	int nFiles;
-	int maxFiles;
 	std::vector<File *> vFiles;
-
-
-	int nMaps;
-	int maxMaps;	
+	
+	int nMaps;	
 	std::vector<Map *> vMap;
 
 	void init();
 
-
-
+	
 public:
 	Map();
 	Map(const std::string & name, Map * root = nullptr);
-	
 	~Map();
+	
+	//-----------------------------------------------	Map Info
 
+	Map * getRoot() const;
 	std::string getName() const;
-	std::string * getFilesNames() const;
+
+	//-----------------------------------------------	Files
+
 	std::vector<File *> getFiles() const;
 	File * getFile(const int & index) const;
-	int getFilesSize() const;
-
-	std::vector<Map*> getMaps() const;
-	int getMapsSize() const;
 
 	void addFile(const std::string& fileName, int nrOfBlocks, int * block, int bytes);
 	void removeFile(const std::string & fileName);
 
+	bool fileExist(const std::string & name) const;
+
+	int getFilesSize() const;
+	int getFileIndex(const std::string & name);
+
+	//-----------------------------------------------	Maps
+
+	std::vector<Map*> getMaps() const;
+
 	void addMap(const std::string& mapName);
 	void removeMap(const std::string& name);
 
-	bool fileExist(const std::string & name) const;
 	bool mapExist(const std::string & name) const;
 
+	int getMapsSize() const;
 	int getMapIndex(const std::string & name);
-	int getFileIndex(const std::string & name);
+
+	//-----------------------------------------------	plz no memory leaks
+
 	void removeEverything();
 
-	Map * getRoot() const;
 };
 
 

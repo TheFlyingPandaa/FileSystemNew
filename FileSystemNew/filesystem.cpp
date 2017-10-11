@@ -3,6 +3,7 @@
 FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
 	mapController = new MapController();
+	mapController->addFile("1", 123, 123 * 512);
 }
 
 FileSystem::~FileSystem() {
@@ -11,10 +12,19 @@ FileSystem::~FileSystem() {
 
 void FileSystem::createFile(const std::string & fileName)
 {
-	int * blockArray;
+	//int * blockArray;
 	//mapController->addFile(fileName, nrOfBlocks, blockArray, fileSize);
 	//Pretty please use this when adding files :D
 
+	/*
+							|\
+				/    /\/o\_
+			   (.-.__.(   __o
+			/\_(      .----'
+			 .' \____/
+			/   /  / \
+		___:____\__\__\__________________ Dont mind me im just taking a piss on your code
+	*/
 
 	//std::string data = "test";
 	//data.resize(1024, 'a');
@@ -131,7 +141,7 @@ void FileSystem::mkdir(const std::string & mapName)
 
 void FileSystem::rm(const std::string & mapName)
 {
-	mapController->removeMap(mapName);
+	mapController->rm(mapName);
 }
 
 void FileSystem::cd(const std::string & mapName)
