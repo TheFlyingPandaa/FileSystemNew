@@ -3,16 +3,16 @@
 FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
 	mapController = new MapController();
-	/*	Debug
+	//	Debug
 	mapController->createMap("1");
 	mapController->goToMap("1");
 	mapController->createMap("2");
 	mapController->goToMap("2");
 	mapController->createMap("3");
 	mapController->goToMap("3");
-	mapController->addFile("4", 123, 123 * 512);
-	mapController->getFile("/1/2/3/4");
-	*/
+	mapController->addFile("Hello", 123, 123 * 512);
+	//File* f = mapController->getFile("/1/2/3/Hello");
+	//std::cout << f->fileName << std::endl;
 	openBlocks = std::vector<int>(250, 0); //250 amount of blocks
 }
 
@@ -26,15 +26,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 	//mapController->addFile(fileName, nrOfBlocks, blockArray, fileSize);
 	//Pretty please use this when adding files :D
 
-	/*
-							|\
-				/    /\/o\_
-			   (.-.__.(   __o
-			/\_(      .----'
-			 .' \____/
-			/   /  / \
-		___:____\__\__\__________________ Dont mind me im just taking a piss on your code
-	*/
+
 
 	//std::string data = "test";
 	//data.resize(1024, 'a');

@@ -77,30 +77,48 @@ void MapController::rm(const std::string & name)
 void MapController::goToMap(const std::string & name)
 {
 	if (name == "..") {
-		current = current->getRoot();
+		std::cout << 1 << std::endl;
 	}
-	if (current->mapExist(name)) {
+	else if (current->mapExist(name) && name.find('/') > name.length()) {
 		current = current->getMaps()[current->getMapIndex(name)];
+	}
+	else if (name.find('/') < name.length()) {
+		
+		Map * walker = root;
+
+		std::string * buffert = new std::string[64];
+		int index = splitPath(name, buffert);
+		std::cout << index << std::endl;
+		
+
+		for (int i = 0; i < index; i++)
+		{			
+			if (walker->mapExist(buffert[i]))
+				walker = walker->getMaps()[walker->getMapIndex(buffert[i])];
+		}
+		current = walker;
+		delete[] buffert;
 	}
 }
 File * MapController::getFile(const std::string & path) const
 {
 	Map * walker = root;
 	
-	std::string * arr = splitPath(path);
+	std::string * buffert = new std::string[64];
+	int index = splitPath(path, buffert);
 	std::string nextPath;
 
-	while (/*!arr[1].empty() &&*/ arr[1].length() > 0)
+	for (int i = 0; i < index; i++)
 	{
-		std::cout << arr[0] << " " << arr[1] << std::endl;
-		walker->addMap(arr[0]);
-		nextPath = arr[1];
-		delete[] arr;
-		arr = splitPath(nextPath);
+		//std::cout << buffert[i] << std::endl;
+		walker = walker->getMaps()[walker->getMapIndex(buffert[i])];
+		
 	}
-	delete[] arr;
-
-	return nullptr;
+	std::string s = buffert[index];
+	
+	delete[] buffert;
+	//std::cout << s << " " << walker->getFile(walker->getFileIndex(s)) << " " << walker->getFileIndex(s) << std::endl;
+	return walker->getFiles()[walker->getFileIndex(s)];
 }
 std::string MapController::pwd() const
 {
@@ -195,22 +213,26 @@ int * MapController::getBlocks(int nrOfBlocks)
 	return nullptr;
 }
 
-std::string * MapController::splitPath(const std::string & path) const
+int MapController::splitPath(const std::string & path, std::string *& buffert) const
 {
-	std::string * retString = new std::string[2];
-
-	int index;
+	int i = 0;
+	int index = 0;
 
 	if (path[0] == '/')
 		index = 1;
 	else
 		index = 0;
-	do {
-		retString[0] += path[index++];
-	} while (path[index] != '/' && index < path.length());
 	
-	while (index < path.length())	
-		retString[1] += path[index++];
+	while (index < path.length())
+	{
+		if (path[index] != '/') 
+		{
+			buffert[i] += path[index];
+		}
+		else
+			i++;		
+		index++;
+	}
+	return i;
 
-	return retString;
 }
