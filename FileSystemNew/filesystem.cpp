@@ -143,6 +143,11 @@ int FileSystem::amountOfBlocksFree() const
 	return mMemblockDevice.spaceLeft();
 }
 
+void FileSystem::saveFileSystem()
+{
+	mMemblockDevice.saveBlocks();
+}
+
 
 
 

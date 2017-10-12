@@ -61,6 +61,7 @@ int main(void) {
 				std::cout << fileSystem.readFile(user).toString() << std::endl;
                 break;
             case 5: // createImage
+				fileSystem.saveFileSystem();
                 break;
             case 6: // restoreImage
                 break;

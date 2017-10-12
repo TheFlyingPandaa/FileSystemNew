@@ -2,6 +2,8 @@
 #define MEMBLOCKDEVICE_H
 #include "blockdevice.h"
 #include <vector>
+#include <fstream>
+
 class MemBlockDevice: public BlockDevice
 {
 public:
@@ -31,6 +33,8 @@ public:
 
 	/* Resets a single block */
 	void singleReset(const int block);
+
+	void saveBlocks();
 
     /* Return the size */
     int size() const;

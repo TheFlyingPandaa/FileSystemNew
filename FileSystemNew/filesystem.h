@@ -46,6 +46,8 @@ public:
     /* Removes a folder in the filesystem */
     // removeFolder(...);
 
+	void saveFileSystem();
+
     /* Function will move the current location to a specified location in the filesystem */
     // goToFolder(...);
 

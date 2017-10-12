@@ -119,6 +119,24 @@ void MemBlockDevice::singleReset(const int block)
 	this->memBlocks[block].reset('0');
 }
 
+void MemBlockDevice::saveBlocks()
+{
+
+	std::ofstream file;
+	file.open("blocks.txt");
+	for (int i = 0; i < 250; i++)
+	{
+		file << memBlocks[i].getOwner();
+		file << "\n";
+		file << memBlocks[i].readBlock().toString();
+		file << "\n";
+	}
+	
+	file.close();
+
+}
+
+
 
 int MemBlockDevice::size() const {
     return this->nrOfBlocks;
