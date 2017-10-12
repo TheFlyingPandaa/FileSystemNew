@@ -34,7 +34,11 @@ public:
 	/* Resets a single block */
 	void singleReset(const int block);
 
+	/* Function for saving the blocks to a file*/
 	void saveBlocks();
+
+	/* Function for reading in the blocks*/
+	void readSavedBlocks();
 
     /* Return the size */
     int size() const;

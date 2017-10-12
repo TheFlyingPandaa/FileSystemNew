@@ -145,8 +145,18 @@ int FileSystem::amountOfBlocksFree() const
 
 void FileSystem::saveFileSystem()
 {
+	//TODO:: Implement filesystem tree save func
+
 	mMemblockDevice.saveBlocks();
 }
+
+void FileSystem::restoreFileSystem()
+{
+	//TODO:: Implement filesystem tree read func
+
+	mMemblockDevice.readSavedBlocks();
+}
+
 
 
 

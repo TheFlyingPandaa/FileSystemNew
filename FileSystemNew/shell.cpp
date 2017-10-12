@@ -64,6 +64,7 @@ int main(void) {
 				fileSystem.saveFileSystem();
                 break;
             case 6: // restoreImage
+				fileSystem.restoreFileSystem();
                 break;
             case 7: // rm
 				fileSystem.rm(commandArr[1]);

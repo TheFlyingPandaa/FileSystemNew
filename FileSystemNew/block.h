@@ -36,7 +36,7 @@ public:
     int size() const;   // returns the size
     Block readBlock() const;    // Returns a copy of block
 
-	std::string getOwner() const;
+	std::string getOwner() const; //Gets the owner of file;
 
     /* Write a block */
     int writeBlock(const std::string &strBlock, const std::string newOwner);

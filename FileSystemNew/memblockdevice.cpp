@@ -136,6 +136,29 @@ void MemBlockDevice::saveBlocks()
 
 }
 
+void MemBlockDevice::readSavedBlocks()
+{
+	
+	std::ifstream file;
+	std::string owner;
+	std::string block;
+	file.open("blocks.txt");
+	if (file.is_open())
+	{
+		for (int i = 0; i < 250; i++)
+		{
+			std::getline(file, owner);
+			std::getline(file, block);
+			writeBlock(i, block, owner);
+		}
+	}
+	file.close();
+
+	std::cout << "DEBUG_FINNISH_READ" << std::endl;
+
+}
+
+
 
 
 int MemBlockDevice::size() const {
