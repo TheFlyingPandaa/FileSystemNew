@@ -77,7 +77,7 @@ void MapController::rm(const std::string & name)
 void MapController::goToMap(const std::string & name)
 {
 	if (name == "..") {
-		std::cout << 1 << std::endl;
+		current = current->getRoot();
 	}
 	else if (current->mapExist(name) && name.find('/') > name.length()) {
 		current = current->getMaps()[current->getMapIndex(name)];
@@ -87,9 +87,7 @@ void MapController::goToMap(const std::string & name)
 		Map * walker = root;
 
 		std::string * buffert = new std::string[64];
-		int index = splitPath(name, buffert);
-		std::cout << index << std::endl;
-		
+		int index = splitPath(name, buffert);		
 
 		for (int i = 0; i < index; i++)
 		{			
@@ -140,7 +138,6 @@ std::string MapController::pwd() const
 	}
 	return retString;
 }
-
 
 //--------------------------------------	Private 
 
