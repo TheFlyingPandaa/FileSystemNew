@@ -26,7 +26,7 @@ private:
 
 	int * getBlocks(int nrOfBlocks);
 
-	std::string * splitPath(const std::string & path) const;
+	int splitPath(const std::string & path, std::string *& buffert) const;
 
 public:
 

@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <string.h>
+//debug
+#include <iostream>
 
 
 struct File
@@ -32,7 +34,7 @@ private:
 	int nMaps;	
 	std::vector<Map *> vMap;
 
-	void init();
+	
 
 	
 public:
@@ -48,7 +50,7 @@ public:
 	//-----------------------------------------------	Files
 
 	std::vector<File *> getFiles() const;
-	File * getFile(const int & index) const;
+	File * getFile(const int & index);
 
 	void addFile(const std::string& fileName, int nrOfBlocks, int * block, int bytes);
 	void removeFile(const std::string & fileName);
@@ -61,6 +63,7 @@ public:
 	//-----------------------------------------------	Maps
 
 	std::vector<Map*> getMaps() const;
+	Map * getMap(const int & index) const;
 
 	void addMap(const std::string& mapName);
 	void removeMap(const std::string& name);

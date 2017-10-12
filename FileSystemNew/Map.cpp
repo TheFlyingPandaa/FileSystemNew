@@ -2,29 +2,33 @@
 
 
 
-void Map::init()
-{
-	nFiles = 0;
-	vFiles = std::vector<File *>();
-
-	nMaps = 0;
-	vMap = std::vector<Map *>();
-
-}
 
 Map::Map()
 {
 	this->mapName = "root";
 	root = this;
 
-	init();
+	nFiles = 0;
+	vFiles = std::vector<File *>();
+
+	nMaps = 0;
+	vMap = std::vector<Map *>();
+
+	
 }
 Map::Map(const std::string& mapName, Map * root)
 {
 	this->mapName = mapName;
 	this->root = root;
 
-	init();
+	nFiles = 0;
+	vFiles = std::vector<File *>();
+
+	nMaps = 0;
+	vMap = std::vector<Map *>();
+
+	
+
 }
 Map::~Map()
 {
@@ -37,6 +41,7 @@ Map::~Map()
 		delete[] vFiles[i]->fileBlocks;
 		delete vFiles[i];
 	}
+	
 }
 
 //-----------------------------------------------	Map info
@@ -56,15 +61,17 @@ std::vector<File*> Map::getFiles() const
 {
 	return vFiles;
 }
-File * Map::getFile(const int & index) const
+File * Map::getFile(const int & index)
 {
-	if (index < nFiles)
+	
 		return vFiles[index];
+	
 }
 
 void Map::addFile(const std::string& fileName, int nrOfBlocks, int * blocks, int bytes)
 {	
 	this->vFiles.push_back(new File(fileName, nrOfBlocks, blocks, bytes));
+	
 	nFiles++;
 }
 void Map::removeFile(const std::string & fileName)
@@ -96,8 +103,10 @@ int Map::getFilesSize() const
 }
 int Map::getFileIndex(const std::string & name)
 {
+	
 	for (int i = 0; i < nFiles; i++)
 	{
+		
 		if (vFiles[i]->fileName == name)
 			return i;
 	}
@@ -111,11 +120,15 @@ std::vector<Map*> Map::getMaps() const
 	return vMap;
 }
 
+Map * Map::getMap(const int & index) const
+{	
+	return vMap[index];
+}
+
 void Map::addMap(const std::string & mapName)
 {
 	this->vMap.push_back(new Map(mapName, this));
 	nMaps++;
-
 }
 void Map::removeMap(const std::string & name)
 {
@@ -176,6 +189,4 @@ void Map::removeEverything()
 	}
 	nMaps = 0;
 	nFiles = 0;
-
-
 }
