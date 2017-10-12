@@ -49,6 +49,7 @@ public:
 	/* Saves the hole fileSystem to a txt file*/
 	void saveFileSystem();
 
+	/* Restores the hole filesystem from a txt file*/
 	void restoreFileSystem();
 
     /* Function will move the current location to a specified location in the filesystem */

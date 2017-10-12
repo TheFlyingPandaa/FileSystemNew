@@ -13,6 +13,7 @@ FileSystem::FileSystem() {
 	mapController->addFile("4", 123, 123 * 512);
 	mapController->getFile("/1/2/3/4");
 	*/
+	//TODO:: Maybe remove
 	openBlocks = std::vector<int>(250, 0); //250 amount of blocks
 }
 
@@ -37,7 +38,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 	*/
 
 	//std::string data = "test";
-	//data.resize(1024, 'a');
+	//data.resize(514, 'a');
 	std::string data;
 	getline(std::cin, data);
 	//std::cin.ignore();
@@ -45,7 +46,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 	{
 
 		//Om vi ska ha C++;) så ska detta tasbort "typ inte"
-		if (data.size() < 512)
+		if (data.size() <= 512)
 		{
 
 			int amount = data.size();
@@ -71,7 +72,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 		{
 
 			int amountBlocks = data.size() / 512;
-			if (data.size() % 2 != 0)
+			if (data.size() % 512 != 0)
 			{
 				amountBlocks++;
 			}
@@ -89,12 +90,17 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 
 			//TODO:: Fix this
 
-			/*for (int i = 0; i < amountBlocks; i++) {
+			for (int i = 0; i < amountBlocks -1; i++) {
 				for (int j = 0; j < 512; j++)
 				{
-					blocks[i] = data[j + (512 * i)];
+					blocks[i][j] = data[j + (512 * i)];
 				}
-			}*/
+			}
+			int tempSize = data.size() - (amountBlocks - 1) * 512;
+			for (int i = 0; i < tempSize; i++ )
+			{
+				blocks[amountBlocks -1][i] = data[i + (512 * (amountBlocks - 1))];
+			}
 
 
 			//PSUDO CODE 
@@ -114,8 +120,10 @@ Block FileSystem::readFile(const std::string user)
 {
 	std::cout << mMemblockDevice.getOwner(0) << std::endl;
 	Block block = mMemblockDevice.readBlock(0);
-	//std::cout << block.toString() << std::endl;
+	//std::cout << block.toString() << "\n" << std::endl;
 	//block = mMemblockDevice.readBlock(1);
+	//std::cout << block.toString() << "\n" << std::endl;
+	//block = mMemblockDevice.readBlock(2);
 	return block;
 
 }
