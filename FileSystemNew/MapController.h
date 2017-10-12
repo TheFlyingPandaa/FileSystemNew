@@ -16,6 +16,8 @@ private:
 	int nrOfBlocks;
 	bool * blocks;
 
+	int totMaps;
+
 	std::string getMaps() const;
 	std::string getFiles() const;
 
@@ -46,6 +48,8 @@ public:
 	//Syntax: (/)map0/map1/file
 	File * getFile(const std::string & path) const;
 	std::string pwd() const;
+
+	void save(const char * path);
 };
 
 #endif 

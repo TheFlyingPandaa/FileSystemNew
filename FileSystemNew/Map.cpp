@@ -190,3 +190,32 @@ void Map::removeEverything()
 	nMaps = 0;
 	nFiles = 0;
 }
+
+void Map::saveString(Map * current, std::string * input, int index) const
+{
+	input[index] += current->mapName + "\n";
+	input[index] += "\t" + current->root->mapName + "\n";
+
+	input[index] += "\t" + std::to_string(current->nFiles) + "\n";
+
+	for (int i = 0; i < current->nFiles; i++)
+	{
+		input[index] += "\t\t" + current->vFiles[i]->fileName + "\n";
+		input[index] += "\t\t" + std::to_string(current->vFiles[i]->nrOfBlocks) + "\n";
+		for (int j = 0; j < current->vFiles[i]->nrOfBlocks; j++)
+		{
+			input[index] += "\t\t" + std::to_string(current->vFiles[i]->fileBlocks[j]) + "\n";
+		}
+		
+		input[index] += "\t\t" + std::to_string(current->vFiles[i]->bytes) + "\n";
+	}
+	for (int i = 0; i < current->nMaps; i++)
+	{
+		current->vMap[i]->saveString(current->vMap[i], input, index + 1);
+	}
+}
+
+void Map::saveString(std::string * buffert, int * index) const
+{
+	saveString(this->root, buffert, 0);
+}

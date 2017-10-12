@@ -16,6 +16,8 @@ MapController::MapController(int nrOfBlocks)
 
 	pos = 0;
 	blockesUsed = 0;
+
+	totMaps = 0;
 }
 MapController::~MapController()
 {
@@ -37,7 +39,10 @@ MapController::~MapController()
 void MapController::createMap(const std::string & name)
 {
 	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty())
+	{
 		current->addMap(name);
+		totMaps++;
+	}
 }
 
 void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes)
@@ -70,6 +75,7 @@ void MapController::rm(const std::string & name)
 		}
 		else if (current->mapExist(name) && !current->fileExist(name)) {
 			removeMap(name);
+			totMaps--;
 		}
 	}
 }
@@ -137,6 +143,18 @@ std::string MapController::pwd() const
 		s.pop_back();
 	}
 	return retString;
+}
+
+void MapController::save(const char * path)
+{
+	std::string * input = new std::string[256];
+	int * i = new int(0);
+	root->saveString(input, i);
+	for (int i = 0; i < 256; i++)
+	{
+		std::cout << input[i];
+	}
+	delete[] input;
 }
 
 //--------------------------------------	Private 
