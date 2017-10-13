@@ -180,6 +180,7 @@ void MapController::load(const char * path)
 		delete maps[i];
 	}
 	maps = std::vector<Map *>();
+	totMaps = 0;
 
 	std::ifstream inFile;
 	inFile.open(path);
@@ -225,8 +226,9 @@ void MapController::load(const char * path)
 					copy[k] = memBlocks[k];
 				}
 				this->root->addFile(fileName, nBlocks, copy, fileSize);
-				this->maps.push_back(this->root);
 			}
+			this->maps.push_back(this->root);
+			
 		}
 		else
 		{
@@ -263,12 +265,13 @@ void MapController::load(const char * path)
 				current->addFile(fileName, nBlocks, copy, fileSize);
 			}
 			maps.push_back(current);
-			totMaps++;
 		}
+		totMaps++;
 
-
+		delete[] memBlocks;
 	}
 
+	
 
 	inFile.close();
 
