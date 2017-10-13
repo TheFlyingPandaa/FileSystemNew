@@ -14,9 +14,9 @@ Map::Map()
 	nMaps = 0;
 	vMap = std::vector<Map *>();
 
-	
+	this->id = 0;
 }
-Map::Map(const std::string& mapName, Map * root)
+Map::Map(const std::string& mapName, Map * root, int id)
 {
 	this->mapName = mapName;
 	this->root = root;
@@ -27,7 +27,7 @@ Map::Map(const std::string& mapName, Map * root)
 	nMaps = 0;
 	vMap = std::vector<Map *>();
 
-	
+	this->id = id;
 
 }
 Map::~Map()
@@ -49,6 +49,10 @@ Map::~Map()
 Map * Map::getRoot() const
 {
 	return this->root;
+}
+int Map::getID() const
+{
+	return this->id;
 }
 std::string Map::getName() const
 {
@@ -125,9 +129,14 @@ Map * Map::getMap(const int & index) const
 	return vMap[index];
 }
 
-void Map::addMap(const std::string & mapName)
+void Map::addMap(const std::string & mapName, int id)
 {
-	this->vMap.push_back(new Map(mapName, this));
+	this->vMap.push_back(new Map(mapName, this, id));
+	nMaps++;
+}
+void Map::addMap(Map * map)
+{
+	this->vMap.push_back(map);
 	nMaps++;
 }
 void Map::removeMap(const std::string & name)
@@ -189,4 +198,35 @@ void Map::removeEverything()
 	}
 	nMaps = 0;
 	nFiles = 0;
+}
+
+void Map::saveString(Map * current, std::string * input, int index) const
+{
+	input[index] += current->mapName + "\n";
+	input[index] += current->root->mapName + "\n";
+	input[index] += std::to_string(current->id) + "\n";
+	input[index] += std::to_string(current->root->id) + "\n";
+
+	input[index] += std::to_string(current->nFiles) + "\n";
+
+	for (int i = 0; i < current->nFiles; i++)
+	{
+		input[index] += current->vFiles[i]->fileName + "\n";
+		input[index] += std::to_string(current->vFiles[i]->nrOfBlocks) + "\n";
+		for (int j = 0; j < current->vFiles[i]->nrOfBlocks; j++)
+		{
+			input[index] += std::to_string(current->vFiles[i]->fileBlocks[j]) + "\n";
+		}
+		
+		input[index] += std::to_string(current->vFiles[i]->bytes) + "\n";
+	}
+	for (int i = 0; i < current->nMaps; i++)
+	{
+		current->vMap[i]->saveString(current->vMap[i], input, index + 1);
+	}
+}
+
+void Map::saveString(std::string * buffert) const
+{
+	saveString(this->root, buffert, 0);
 }

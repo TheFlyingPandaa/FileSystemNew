@@ -3,6 +3,7 @@
 #include "Map.h"
 
 #include <iostream>
+#include <fstream>
 
 class MapController
 {
@@ -15,6 +16,12 @@ private:
 
 	int nrOfBlocks;
 	bool * blocks;
+
+	std::vector<Map*> maps;
+
+	int currentID;
+
+	int totMaps;
 
 	std::string getMaps() const;
 	std::string getFiles() const;
@@ -46,6 +53,9 @@ public:
 	//Syntax: (/)map0/map1/file
 	File * getFile(const std::string & path) const;
 	std::string pwd() const;
+
+	void save(const char * path);
+	void load(const char * path);
 };
 
 #endif 
