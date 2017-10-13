@@ -25,6 +25,8 @@ class Map
 {
 private:
 
+	int id;
+
 	Map * root;
 	std::string mapName;
 
@@ -39,12 +41,13 @@ private:
 	
 public:
 	Map();
-	Map(const std::string & name, Map * root = nullptr);
+	Map(const std::string & name, Map * root = nullptr, int id = -1);
 	~Map();
 	
 	//-----------------------------------------------	Map Info
 
 	Map * getRoot() const;
+	int getID() const;
 	std::string getName() const;
 
 	//-----------------------------------------------	Files
@@ -65,7 +68,8 @@ public:
 	std::vector<Map*> getMaps() const;
 	Map * getMap(const int & index) const;
 
-	void addMap(const std::string& mapName);
+	void addMap(const std::string& mapName, int id = -1);
+	void addMap(Map * map);
 	void removeMap(const std::string& name);
 
 	bool mapExist(const std::string & name) const;

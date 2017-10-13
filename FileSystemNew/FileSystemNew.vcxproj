@@ -155,6 +155,9 @@
     <ClInclude Include="MapController.h" />
     <ClInclude Include="memblockdevice.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="save.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

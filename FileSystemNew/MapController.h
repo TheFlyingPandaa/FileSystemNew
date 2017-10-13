@@ -17,6 +17,10 @@ private:
 	int nrOfBlocks;
 	bool * blocks;
 
+	std::vector<Map*> maps;
+
+	int currentID;
+
 	int totMaps;
 
 	std::string getMaps() const;

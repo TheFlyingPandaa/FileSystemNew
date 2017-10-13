@@ -8,6 +8,8 @@ MapController::MapController(int nrOfBlocks)
 	root = new Map();
 	current = root;
 
+	currentID = 1;
+
 	this->nrOfBlocks = nrOfBlocks;
 	blocks = new bool[nrOfBlocks];
 
@@ -18,6 +20,10 @@ MapController::MapController(int nrOfBlocks)
 	blockesUsed = 0;
 
 	totMaps = 0;
+
+	maps = std::vector<Map*>();
+	maps.push_back(root);
+	totMaps++;
 }
 MapController::~MapController()
 {
@@ -40,7 +46,9 @@ void MapController::createMap(const std::string & name)
 {
 	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty())
 	{
-		current->addMap(name);
+		Map * map = new Map(name, current, currentID);
+		maps.push_back(map);
+		current->addMap(map);
 		totMaps++;
 	}
 }
@@ -147,14 +155,16 @@ std::string MapController::pwd() const
 
 void MapController::save(const char * path)
 {
-	std::string * input = new std::string[totMaps + 1];
+	std::string * input = new std::string[totMaps];
 	
 	root->saveString(input);
 
 	std::ofstream outFile;
 	outFile.open(path);
 
-	for (int i = 0; i < totMaps + 1; i++)
+	outFile << totMaps << std::endl;
+
+	for (int i = 0; i < totMaps; i++)
 	{
 		outFile << input[i];
 	}
@@ -165,7 +175,104 @@ void MapController::save(const char * path)
 
 void MapController::load(const char * path)
 {
+	for (size_t i = 0; i < totMaps; i++)
+	{
+		delete maps[i];
+	}
+	maps = std::vector<Map *>();
 
+	std::ifstream inFile;
+	inFile.open(path);
+
+	int nMaps;
+	inFile >> nMaps;
+
+	int blockPos = 0;
+
+	for (int i = 0; i < nMaps; i++)
+	{
+		std::string name, root, fileName;
+		int nFiles, nBlocks, fileSize, mapID, parentID;
+		int * memBlocks = new int[0];
+		Map * current;
+
+		inFile >> name;
+		inFile >> root;
+		inFile >> mapID;
+		inFile >> parentID;
+		if (name == "root") {
+			this->root = new Map();
+			inFile >> nFiles;
+			
+			for (int j = 0; j < nFiles; j++)
+			{
+				inFile >> fileName;
+				inFile >> nBlocks;
+				blockesUsed += nBlocks;
+				delete[] memBlocks;
+				memBlocks = new int[nBlocks];
+				for (int k = 0; k < nBlocks; k++)
+				{
+					inFile >> memBlocks[k];
+					this->blocks[memBlocks[k]] = true;
+					if (memBlocks[k] > blockPos)
+						blockPos = memBlocks[k];
+				}
+				inFile >> fileSize;
+				int * copy = new int[nBlocks];
+				for (int k = 0; k < nBlocks; k++)
+				{
+					copy[k] = memBlocks[k];
+				}
+				this->root->addFile(fileName, nBlocks, copy, fileSize);
+				this->maps.push_back(this->root);
+			}
+		}
+		else
+		{
+			Map * parent;
+			for (int j = 0; j < totMaps; j++)
+			{
+				if (this->maps[j]->getID() == parentID)
+					parent = this->maps[j];
+			}
+			current = new Map(name, parent, mapID);
+			current->getRoot()->addMap(current);
+			inFile >> nFiles;
+
+			for (int j = 0; j < nFiles; j++)
+			{
+				inFile >> fileName;
+				inFile >> nBlocks;
+				blockesUsed += nBlocks;
+				delete[] memBlocks;
+				memBlocks = new int[nBlocks];
+				for (int k = 0; k < nBlocks; k++)
+				{
+					inFile >> memBlocks[k];
+					this->blocks[memBlocks[k]] = true;
+					if (memBlocks[k] > blockPos)
+						blockPos = memBlocks[k];
+				}
+				inFile >> fileSize;
+				int * copy = new int[nBlocks];
+				for (int k = 0; k < nBlocks; k++)
+				{
+					copy[k] = memBlocks[k];
+				}
+				current->addFile(fileName, nBlocks, copy, fileSize);
+			}
+			maps.push_back(current);
+			totMaps++;
+		}
+
+
+	}
+
+
+	inFile.close();
+
+	this->current = root;
 }
 
 //--------------------------------------	Private 
