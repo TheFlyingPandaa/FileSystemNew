@@ -3,6 +3,7 @@
 #include "Map.h"
 
 #include <iostream>
+#include <fstream>
 
 class MapController
 {
@@ -50,6 +51,7 @@ public:
 	std::string pwd() const;
 
 	void save(const char * path);
+	void load(const char * path);
 };
 
 #endif 

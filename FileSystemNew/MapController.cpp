@@ -147,14 +147,25 @@ std::string MapController::pwd() const
 
 void MapController::save(const char * path)
 {
-	std::string * input = new std::string[256];
-	int * i = new int(0);
-	root->saveString(input, i);
-	for (int i = 0; i < 256; i++)
+	std::string * input = new std::string[totMaps + 1];
+	
+	root->saveString(input);
+
+	std::ofstream outFile;
+	outFile.open(path);
+
+	for (int i = 0; i < totMaps + 1; i++)
 	{
-		std::cout << input[i];
+		outFile << input[i];
 	}
+
+	outFile.close();
 	delete[] input;
+}
+
+void MapController::load(const char * path)
+{
+
 }
 
 //--------------------------------------	Private 

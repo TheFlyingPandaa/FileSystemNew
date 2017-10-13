@@ -4,6 +4,7 @@ FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
 	mapController = new MapController();
 	//	Debug
+	/*
 	mapController->createMap("1");
 	mapController->addFile("Hello123", 15, 15 * 512);
 	mapController->goToMap("1");
@@ -17,8 +18,8 @@ FileSystem::FileSystem() {
 	mapController->goToMap("3");
 	mapController->addFile("Hello", 5, 5 * 512);
 	mapController->addFile("HelloImSecondFile", 15, 15 * 512);
-	
-	mapController->save("");
+	*/
+	//mapController->save("save.txt");
 	//File* f = mapController->getFile("/1/2/3/Hello");
 	//std::cout << f->fileName << std::endl;
 	openBlocks = std::vector<int>(250, 0); //250 amount of blocks

@@ -78,7 +78,7 @@ public:
 	void removeEverything();
 
 	void saveString(Map * current, std::string * input, int  index) const;
-	void saveString(std::string * buffert, int * index) const;
+	void saveString(std::string * buffert) const;
 	
 
 };

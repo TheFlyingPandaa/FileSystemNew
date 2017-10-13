@@ -194,20 +194,20 @@ void Map::removeEverything()
 void Map::saveString(Map * current, std::string * input, int index) const
 {
 	input[index] += current->mapName + "\n";
-	input[index] += "\t" + current->root->mapName + "\n";
+	input[index] += current->root->mapName + "\n";
 
-	input[index] += "\t" + std::to_string(current->nFiles) + "\n";
+	input[index] += std::to_string(current->nFiles) + "\n";
 
 	for (int i = 0; i < current->nFiles; i++)
 	{
-		input[index] += "\t\t" + current->vFiles[i]->fileName + "\n";
-		input[index] += "\t\t" + std::to_string(current->vFiles[i]->nrOfBlocks) + "\n";
+		input[index] += current->vFiles[i]->fileName + "\n";
+		input[index] += std::to_string(current->vFiles[i]->nrOfBlocks) + "\n";
 		for (int j = 0; j < current->vFiles[i]->nrOfBlocks; j++)
 		{
-			input[index] += "\t\t" + std::to_string(current->vFiles[i]->fileBlocks[j]) + "\n";
+			input[index] += std::to_string(current->vFiles[i]->fileBlocks[j]) + "\n";
 		}
 		
-		input[index] += "\t\t" + std::to_string(current->vFiles[i]->bytes) + "\n";
+		input[index] += std::to_string(current->vFiles[i]->bytes) + "\n";
 	}
 	for (int i = 0; i < current->nMaps; i++)
 	{
@@ -215,7 +215,7 @@ void Map::saveString(Map * current, std::string * input, int index) const
 	}
 }
 
-void Map::saveString(std::string * buffert, int * index) const
+void Map::saveString(std::string * buffert) const
 {
 	saveString(this->root, buffert, 0);
 }
