@@ -2,7 +2,7 @@
 
 FileSystem::FileSystem() {
 	mMemblockDevice = MemBlockDevice();
-	mapController = new MapController();
+	mapController = new MapController(250);
 
 	openBlocks = std::vector<int>(250, 0); //250 amount of blocks
 }
