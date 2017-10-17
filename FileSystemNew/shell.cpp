@@ -30,6 +30,9 @@ int main(void) {
 	std::string dataInput;
     bool bRun = true;
 
+	Block * blocks = nullptr;
+	int blockSize = 0;
+
     do {
 		currentDir = fileSystem.pwd();
         std::cout << user << ":" << currentDir << "$ ";
@@ -43,6 +46,7 @@ int main(void) {
 	        {
 			case 0: //quit
 				bRun = quit();                
+				delete[] blocks;
                 break;
             case 1: // format
 				fileSystem.formatSystem();
@@ -56,7 +60,16 @@ int main(void) {
 				fileSystem.createFile(commandArr[1], user);
                 break;
             case 4: // cat
-				std::cout << fileSystem.readFile(user).toString() << std::endl;
+				if (blocks != nullptr)
+					delete[] blocks;
+				blocks = fileSystem.readFile(user, commandArr[1], blockSize);
+				for (size_t i = 0; i < blockSize; i++)
+				{
+					std::cout << blocks[i].toString();
+				}
+				std::cout << std::endl;
+
+				//std::cout << fileSystem.readFile(user, commandArr[1], i) << std::endl;
                 break;
             case 5: // createImage
 				fileSystem.saveFileSystem();
@@ -90,6 +103,8 @@ int main(void) {
             }
         }
     } while (bRun == true);
+
+	
 
     return 0;
 }

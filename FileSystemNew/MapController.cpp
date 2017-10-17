@@ -59,7 +59,7 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes)
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
 			current->addFile(name, nrOfBlocks, nBlocks, bytes);
-			this->blockesUsed++;
+			this->blockesUsed+=nrOfBlocks;
 		}
 	}
 }
@@ -69,9 +69,13 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
 			current->addFile(name, nrOfBlocks, nBlocks, fileSize);
-			this->blockesUsed++;
+			this->blockesUsed+=nrOfBlocks;
 		}
-		blocks = nBlocks;
+		if (blocks != nullptr)
+			delete[] blocks;
+		blocks = new int[nrOfBlocks];
+		for (int i = 0; i < nrOfBlocks; i++)
+			blocks[i] = nBlocks[i];
 	}
 }
 

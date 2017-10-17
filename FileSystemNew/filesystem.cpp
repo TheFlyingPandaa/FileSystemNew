@@ -14,8 +14,8 @@ FileSystem::~FileSystem() {
 
 void FileSystem::createFile(const std::string & fileName, const std::string user)
 {
-	//int * blockArray;
-	//mapController->addFile(fileName, nrOfBlocks, blockArray, fileSize);
+	int * blockArray = nullptr;
+
 	//Pretty please use this when adding files :D
 
 
@@ -48,8 +48,10 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 			//}
 
 			
-			mMemblockDevice.writeBlock(0, newString, user);
+			mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char));
+			mMemblockDevice.writeBlock(blockArray[0], newString, user);
 			std::cout << "DEBUG_MSG: it finnished" << std::endl;
+			delete[] blockArray;
 		}
 		else
 		{
@@ -88,26 +90,34 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 
 			//PSUDO CODE 
 			//findEmptyBlocks(amountBlocks);
+			mapController->addFile(fileName, amountBlocks, blockArray, data.size() * sizeof(char));
 			//STOP PSUDO
 			for (int i = 0; i < amountBlocks; i++) {
-				mMemblockDevice.writeBlock(i, blocks[i], user);
+				mMemblockDevice.writeBlock(blockArray[i], blocks[i], user);
 			}
-
+			delete[] blockArray;
 			delete[] blocks;
 
 		}
 	}
 }
 
-Block FileSystem::readFile(const std::string user)
+Block * FileSystem::readFile(const std::string user, const std::string & fileName, int& size)
 {
 	std::cout << mMemblockDevice.getOwner(0) << std::endl;
-	Block block = mMemblockDevice.readBlock(0);
+	File * f = mapController->getFile(fileName);
+	Block * blocks = new Block[f->nrOfBlocks];
+	size = f->nrOfBlocks;
+	for (int i = 0; i < f->nrOfBlocks; i++)
+	{
+		blocks[i] = mMemblockDevice.readBlock(f->fileBlocks[i]);
+	}
+	//Block block = mMemblockDevice.readBlock(0);
 	//std::cout << block.toString() << "\n" << std::endl;
 	//block = mMemblockDevice.readBlock(1);
 	//std::cout << block.toString() << "\n" << std::endl;
 	//block = mMemblockDevice.readBlock(2);
-	return block;
+	return blocks;
 
 }
 

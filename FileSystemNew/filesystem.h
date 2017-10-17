@@ -30,7 +30,7 @@ public:
 	void createFile(const std::string &fileName, const std::string user);
 
 	/*Reads a block and outputs to user*/
-	Block readFile(const std::string user);
+	Block * readFile(const std::string user, const std::string & fileName, int & size);
 
 	/*Formating the hole file system*/
 	void formatSystem();
