@@ -126,6 +126,9 @@ void FileSystem::formatSystem()
 	//TODO:: Insert filesytem reset	
 
 	mMemblockDevice.reset();
+	this->mapController->~MapController(); //Ja detta ser ut som en "Ghetto lösning"
+	this->mapController = new MapController(250); //Men det ska var en legit väg att resata ett objekt
+
 }
 
 void FileSystem::removeFile()
