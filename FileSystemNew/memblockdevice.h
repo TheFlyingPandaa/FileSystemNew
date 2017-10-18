@@ -37,6 +37,8 @@ public:
 	/* Function for saving the blocks to a file*/
 	void saveBlocks();
 
+	void editReadWrite(int blockNr, bool readAll, bool writeAll);
+
 	/* Function for reading in the blocks*/
 	void readSavedBlocks();
 

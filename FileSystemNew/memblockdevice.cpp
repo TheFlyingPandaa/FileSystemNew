@@ -136,6 +136,11 @@ void MemBlockDevice::saveBlocks()
 
 }
 
+void MemBlockDevice::editReadWrite(int blockNr, bool readAll, bool writeAll)
+{
+	memBlocks[blockNr].editReadWrite(readAll, writeAll);
+}
+
 void MemBlockDevice::readSavedBlocks()
 {
 	

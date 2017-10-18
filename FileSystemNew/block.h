@@ -12,7 +12,8 @@ private:
     int nrOfElements;
 
 	std::string owner;
-	
+	bool readAll;
+	bool writeAll;
 
 public:
     /* Constructor */
@@ -37,6 +38,8 @@ public:
     Block readBlock() const;    // Returns a copy of block
 
 	std::string getOwner() const; //Gets the owner of file;
+
+	void editReadWrite(bool readAll, bool writeAll); //Owner can alllways read and write, this is for the rest
 
     /* Write a block */
     int writeBlock(const std::string &strBlock, const std::string newOwner);

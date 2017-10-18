@@ -15,6 +15,8 @@ Block::Block(int size) {
     this->reset();
 
 	owner = "NULL";
+	readAll = true;
+	writeAll = true;
 }
 
 Block::Block(const Block &other) {
@@ -62,6 +64,12 @@ Block Block::readBlock() const {
 std::string Block::getOwner() const
 {
 	return this->owner;
+}
+
+void Block::editReadWrite(bool readAll, bool writeAll)
+{
+	this->readAll = readAll;
+	this->writeAll = writeAll;
 }
 
 int Block::writeBlock(const std::string &strBlock, const std::string newOwner) {
