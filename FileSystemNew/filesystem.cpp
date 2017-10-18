@@ -73,7 +73,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 				blocks[i].resize(512, 0);
 			}
 
-			//TODO:: Fix this
+			//TODO:: Fix this: probs fixed
 
 			for (int i = 0; i < amountBlocks -1; i++) {
 				for (int j = 0; j < 512; j++)
@@ -87,11 +87,8 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 				blocks[amountBlocks -1][i] = data[i + (512 * (amountBlocks - 1))];
 			}
 
-
-			//PSUDO CODE 
-			//findEmptyBlocks(amountBlocks);
 			mapController->addFile(fileName, amountBlocks, blockArray, data.size() * sizeof(char));
-			//STOP PSUDO
+			
 			for (int i = 0; i < amountBlocks; i++) {
 				mMemblockDevice.writeBlock(blockArray[i], blocks[i], user);
 			}
@@ -100,6 +97,24 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 
 		}
 	}
+}
+
+void FileSystem::createCopyFile(const std::string & oldName, const std::string & newFile, const std::string & user)
+{
+	int * blockArray = nullptr;
+
+	File * file = mapController->getFile(oldName);
+	Block * block = new Block[file->nrOfBlocks];
+	
+	mapController->addFile(newFile, file->nrOfBlocks, blockArray, file->bytes);
+
+	for (int i = 0; i < file->nrOfBlocks; i++)
+	{
+		mMemblockDevice.writeBlock(blockArray[i], block[i].toString(), user);
+	}
+
+	delete[] blockArray;
+
 }
 
 Block * FileSystem::readFile(const std::string user, const std::string & fileName, int& size)

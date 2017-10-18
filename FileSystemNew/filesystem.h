@@ -29,6 +29,8 @@ public:
     // createFile(...)
 	void createFile(const std::string &fileName, const std::string user);
 
+	void createCopyFile(const std::string &oldName, const std::string & newFile, const std::string & user);
+
 	/*Reads a block and outputs to user*/
 	Block * readFile(const std::string user, const std::string & fileName, int & size);
 

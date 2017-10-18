@@ -81,6 +81,7 @@ int main(void) {
 				fileSystem.rm(commandArr[1]);
                 break;
             case 8: // cp
+				fileSystem.createCopyFile(commandArr[1], commandArr[2], user);
                 break;
             case 9: // append
                 break;
