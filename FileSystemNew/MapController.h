@@ -56,6 +56,8 @@ public:
 
 	void save(const char * path);
 	void load(const char * path);
+	std::string getName(const std::string & path) const;
 };
 
 #endif 
+
