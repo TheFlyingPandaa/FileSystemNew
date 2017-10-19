@@ -106,7 +106,14 @@ void FileSystem::createCopyFile(const std::string & oldName, const std::string &
 	File * file = mapController->getFile(oldName);
 	Block * block = new Block[file->nrOfBlocks];
 	
+
+	for (int i = 0; i < file->nrOfBlocks; i++)
+	{
+		block[i] = mMemblockDevice.readBlock(file->fileBlocks[i]);
+	}
+
 	mapController->addFile(newFile, file->nrOfBlocks, blockArray, file->bytes, user);
+
 
 	for (int i = 0; i < file->nrOfBlocks; i++)
 	{
@@ -114,6 +121,7 @@ void FileSystem::createCopyFile(const std::string & oldName, const std::string &
 	}
 	
 	delete[] blockArray;
+	delete[] block;
 
 }
 
