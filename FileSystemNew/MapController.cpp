@@ -82,7 +82,7 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 		std::string * path = new std::string[64];
 
 		int size = this->splitPath(name, path);
-
+		Map * c = current;
 		this->goToMap(name);
 
 		int * nBlocks = this->getBlocks(nrOfBlocks);
@@ -96,7 +96,7 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 		for (int i = 0; i < nrOfBlocks; i++)
 			blocks[i] = nBlocks[i];				
 		delete[] path;
-
+		this->current = c;
 	}
 }
 
