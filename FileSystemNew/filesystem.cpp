@@ -214,7 +214,7 @@ void FileSystem::mv(const std::string & fileName, const std::string & destFile, 
 	{
 		createCopyFile(fileName, destFile, user);
 
-		mapController->rm(fileName);
+		mapController->rm(fileName, user);
 	}
 	
 

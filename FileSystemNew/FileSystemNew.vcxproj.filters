@@ -63,4 +63,9 @@
       <Filter>Header Files\MapSystem</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

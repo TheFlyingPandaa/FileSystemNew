@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Block">
+    <Position X="0.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEgAAEAAAQgAAAAIAAJAABAAEAAAAAAEAgAAAABAE=</HashCode>
+      <FileName>block.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockDevice">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAgAAEAAAAABAAAIAAQAABAAAAAACACEAAAAAAAgA=</HashCode>
+      <FileName>blockdevice.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="memBlocks" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FileSystem">
+    <Position X="4.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAjAAAACAAAAAABAEAAAAAERgAQAAAJAAAAICQI=</HashCode>
+      <FileName>filesystem.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mMemblockDevice" />
+      <Field Name="mapController" />
+      <Field Name="openBlocks" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Map">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAAAgACRAhBABACBAADgABQAAAAIAAQYAAgMAgAAAwA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vFiles" />
+      <Field Name="vMap" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MapController">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CJAAgAAAAoCCAAABAABgDIEAkAAAgASCAAIABAAAVAA=</HashCode>
+      <FileName>MapController.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="root" />
+      <Field Name="current" />
+      <Field Name="maps" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MemBlockDevice">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAAAAAAAoAAQAABAAMAAAAAAEAgAAAhAAg=</HashCode>
+      <FileName>memblockdevice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::vector&lt;_Ty, _Alloc&gt;" Collapsed="true">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>A0IAEIEqCrBsEABAAOMIAAAyAAUEQBIAhQkwggAFUkI=</HashCode>
+      <FileName>c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vector</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="File">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAEAAiAAEAAAAAAAQA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
