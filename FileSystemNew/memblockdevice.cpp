@@ -156,7 +156,7 @@ void MemBlockDevice::readSavedBlocks(const char * path)
 		while (walker != "0xTOMMY\n")
 		{
 			std::getline(file, walker);
-			std::cout << walker << std::endl;
+			
 		}
 		for (int i = 0; i < 250; i++)
 		{
@@ -165,9 +165,7 @@ void MemBlockDevice::readSavedBlocks(const char * path)
 			writeBlock(i, block, owner);
 		}
 	}
-	file.close();
-
-	std::cout << "DEBUG_FINNISH_READ" << std::endl;
+	file.close();	
 
 }
 

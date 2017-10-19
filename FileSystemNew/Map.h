@@ -3,8 +3,6 @@
 #include <string>
 #include <vector>
 #include <string.h>
-//debug
-#include <iostream>
 
 
 struct File

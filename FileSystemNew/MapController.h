@@ -2,7 +2,6 @@
 #define MapC_H
 #include "Map.h"
 
-#include <iostream>
 #include <fstream>
 
 class MapController

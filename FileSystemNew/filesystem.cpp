@@ -49,8 +49,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 
 			
 			mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char), user);
-			mMemblockDevice.writeBlock(blockArray[0], newString, user);
-			std::cout << "DEBUG_MSG: it finnished" << std::endl;
+			mMemblockDevice.writeBlock(blockArray[0], newString, user);			
 			delete[] blockArray;
 		}
 		else
@@ -125,7 +124,6 @@ void FileSystem::createFileNoInp(const std::string & fileName, const std::string
 
 		mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char), user);
 		mMemblockDevice.writeBlock(blockArray[0], newString, user);
-		std::cout << "DEBUG_MSG: it finnished" << std::endl;
 		delete[] blockArray;
 	}
 	else
@@ -210,11 +208,6 @@ Block * FileSystem::readFile(const std::string user, const std::string & fileNam
 	{
 		blocks[i] = mMemblockDevice.readBlock(f->fileBlocks[i]);
 	}
-	//Block block = mMemblockDevice.readBlock(0);
-	//std::cout << block.toString() << "\n" << std::endl;
-	//block = mMemblockDevice.readBlock(1);
-	//std::cout << block.toString() << "\n" << std::endl;
-	//block = mMemblockDevice.readBlock(2);
 	return blocks;
 
 }
