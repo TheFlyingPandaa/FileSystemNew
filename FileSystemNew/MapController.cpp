@@ -132,7 +132,19 @@ void MapController::goToMap(const std::string & name)
 		for (int i = 0; i < index; i++)
 		{			
 			if (walker->mapExist(buffert[i]))
-				walker = walker->getMaps()[walker->getMapIndex(buffert[i])];
+			{
+				int j = walker->getMapIndex(buffert[i]);
+
+				if (j == -1) {
+					walker = walker;
+				}
+				else if (j == -2) {
+					walker = walker->getRoot();
+				}
+				else {
+					walker = walker->getMaps()[walker->getMapIndex(buffert[i])];
+				}
+			}
 		}
 		current = walker;
 		delete[] buffert;

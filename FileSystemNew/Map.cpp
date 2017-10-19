@@ -156,6 +156,10 @@ void Map::removeMap(const std::string & name)
 
 bool Map::mapExist(const std::string & name) const
 {		
+	if (name == ".")
+		return true;
+	if (name == "..")
+		return true;
 	for (int i = 0; i < nMaps; i++)
 	{
 		if (this->vMap[i]->getName() == name)
@@ -170,12 +174,16 @@ int Map::getMapsSize() const
 }
 int Map::getMapIndex(const std::string & name)
 {
+	if (name == ".")
+		return -1;
+	if (name == "..")
+		return -2;
 	for (int i = 0; i < nMaps; i++)
 	{
 		if (vMap[i]->getName() == name)
 			return i;
 	}
-	return -1;
+	return -3;
 }
 
 //-----------------------------------------------	plz no memory leaks
