@@ -44,12 +44,29 @@ MapController::~MapController()
 
 void MapController::createMap(const std::string & name)
 {
-	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty())
+	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find("/") > name.length())
 	{
 		Map * map = new Map(name, current, currentID);
 		maps.push_back(map);
 		current->addMap(map);
 		totMaps++;
+	}
+	else if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find("/") < name.length()) {
+		
+
+		std::string n = this->getName(name);
+
+		Map * c = current;
+
+		this->goToMap(name);
+
+		Map * map = new Map(n, current, currentID);
+		maps.push_back(map);
+		current->addMap(map);
+		totMaps++;
+
+		current = c;
+
 	}
 }
 
@@ -119,12 +136,18 @@ void MapController::goToMap(const std::string & name)
 	if (name == "..") {
 		current = current->getRoot();
 	}
+	else if (name == ".") {
+		current = current;
+	}
 	else if (current->mapExist(name) && name.find('/') > name.length()) {
 		current = current->getMaps()[current->getMapIndex(name)];
 	}
 	else if (name.find('/') < name.length()) {
-		
-		Map * walker = root;
+		Map * walker;
+		if (name[0] == '.' && name[1] != '.')
+			walker = current;
+		else
+			walker = root;
 
 		std::string * buffert = new std::string[64];
 		int index = splitPath(name, buffert);		
@@ -417,14 +440,19 @@ int MapController::splitPath(const std::string & path, std::string *& buffert) c
 
 std::string MapController::getName(const std::string & path) const
 {
-	std::string name;
+	std::string name = std::string();
 
 	int i = 0;
-	int index = path.length();
+	int index = path.length() - 1;
+	int rm = 0;
 
-	if (path[path.length()] == '/')
-		index = path.length() - 1;
 
+	if (path[path.length() - 1] == '/')
+	{
+		index = path.length() - 2;
+		
+		rm = 0;
+	}
 	while (index >= 0)
 	{
 		if (path[index] != '/')
@@ -434,8 +462,8 @@ std::string MapController::getName(const std::string & path) const
 		else
 		{
 			std::string ret;
-			for (int j = name.length(); j > -1; j--)
-			{
+			for (int j = name.length() - 1; j >= 0; j--)
+			{			
 				ret += name[j];
 			}
 			return ret;
@@ -443,7 +471,7 @@ std::string MapController::getName(const std::string & path) const
 		index--;
 	}
 	std::string ret;
-	for (int j = name.length(); j > -1; j--)
+	for (int j = name.length(); j > 0; j--)
 	{
 		ret += name[i];
 	}
