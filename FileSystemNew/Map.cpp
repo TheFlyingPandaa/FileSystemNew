@@ -72,9 +72,9 @@ File * Map::getFile(const int & index)
 	
 }
 
-void Map::addFile(const std::string& fileName, int nrOfBlocks, int * blocks, int bytes)
+void Map::addFile(const std::string& fileName, int nrOfBlocks, int * blocks, int bytes, const std::string & user)
 {	
-	this->vFiles.push_back(new File(fileName, nrOfBlocks, blocks, bytes));
+	this->vFiles.push_back(new File(fileName, nrOfBlocks, blocks, bytes, user));
 	
 	nFiles++;
 }
@@ -212,6 +212,7 @@ void Map::saveString(Map * current, std::string * input, int index) const
 	for (int i = 0; i < current->nFiles; i++)
 	{
 		input[index] += current->vFiles[i]->fileName + "\n";
+		input[index] += current->vFiles[i]->user + "\n";
 		input[index] += std::to_string(current->vFiles[i]->nrOfBlocks) + "\n";
 		for (int j = 0; j < current->vFiles[i]->nrOfBlocks; j++)
 		{

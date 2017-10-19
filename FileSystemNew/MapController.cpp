@@ -53,22 +53,22 @@ void MapController::createMap(const std::string & name)
 	}
 }
 
-void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes)
+void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes, const std::string & user)
 {
 	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty()) {
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
-			current->addFile(name, nrOfBlocks, nBlocks, bytes);
+			current->addFile(name, nrOfBlocks, nBlocks, bytes, user);
 			this->blockesUsed+=nrOfBlocks;
 		}
 	}
 }
-void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize)
+void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize, const std::string & user)
 {
 	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty()) {
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
-			current->addFile(name, nrOfBlocks, nBlocks, fileSize);
+			current->addFile(name, nrOfBlocks, nBlocks, fileSize, user);
 			this->blockesUsed+=nrOfBlocks;
 		}
 		if (blocks != nullptr)
@@ -79,11 +79,12 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 	}
 }
 
-void MapController::rm(const std::string & name)
+void MapController::rm(const std::string & name, const std::string & user)
 {
 	if (!name.empty()) {
 		if (current->fileExist(name) && !current->mapExist(name)) {
-			removeFile(name);
+			if (current->getFile(current->getFileIndex(name))->user == user)
+				removeFile(name);
 		}
 		else if (current->mapExist(name) && !current->fileExist(name)) {
 			removeMap(name);
@@ -173,6 +174,8 @@ void MapController::save(const char * path)
 		outFile << input[i];
 	}
 
+	outFile << "0xTOMMY";
+
 	outFile.close();
 	delete[] input;
 }
@@ -196,7 +199,7 @@ void MapController::load(const char * path)
 
 	for (int i = 0; i < nMaps; i++)
 	{
-		std::string name, root, fileName;
+		std::string name, root, fileName, user;
 		int nFiles, nBlocks, fileSize, mapID, parentID;
 		int * memBlocks = new int[0];
 		Map * current;
@@ -212,6 +215,7 @@ void MapController::load(const char * path)
 			for (int j = 0; j < nFiles; j++)
 			{
 				inFile >> fileName;
+				inFile >> user;
 				inFile >> nBlocks;
 				blockesUsed += nBlocks;
 				delete[] memBlocks;
@@ -229,7 +233,7 @@ void MapController::load(const char * path)
 				{
 					copy[k] = memBlocks[k];
 				}
-				this->root->addFile(fileName, nBlocks, copy, fileSize);
+				this->root->addFile(fileName, nBlocks, copy, fileSize, user);
 			}
 			this->maps.push_back(this->root);
 			
@@ -249,6 +253,7 @@ void MapController::load(const char * path)
 			for (int j = 0; j < nFiles; j++)
 			{
 				inFile >> fileName;
+				inFile >> user;
 				inFile >> nBlocks;
 				blockesUsed += nBlocks;
 				delete[] memBlocks;
@@ -266,7 +271,7 @@ void MapController::load(const char * path)
 				{
 					copy[k] = memBlocks[k];
 				}
-				current->addFile(fileName, nBlocks, copy, fileSize);
+				current->addFile(fileName, nBlocks, copy, fileSize, user);
 			}
 			maps.push_back(current);
 		}

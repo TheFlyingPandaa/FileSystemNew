@@ -35,12 +35,12 @@ public:
 	void singleReset(const int block);
 
 	/* Function for saving the blocks to a file*/
-	void saveBlocks();
+	void saveBlocks(const char * path);
 
 	void editReadWrite(int blockNr, bool readAll, bool writeAll);
 
 	/* Function for reading in the blocks*/
-	void readSavedBlocks();
+	void readSavedBlocks(const char * path);
 
     /* Return the size */
     int size() const;

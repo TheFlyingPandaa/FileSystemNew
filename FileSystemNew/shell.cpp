@@ -72,13 +72,13 @@ int main(void) {
 				//std::cout << fileSystem.readFile(user, commandArr[1], i) << std::endl;
                 break;
             case 5: // createImage
-				fileSystem.saveFileSystem();
+				fileSystem.saveFileSystem(commandArr[1].data());
                 break;
             case 6: // restoreImage
-				fileSystem.restoreFileSystem();
+				fileSystem.restoreFileSystem(commandArr[1].data());
                 break;
             case 7: // rm
-				fileSystem.rm(commandArr[1]);
+				fileSystem.rm(commandArr[1], user);
                 break;
             case 8: // cp
 				fileSystem.createCopyFile(commandArr[1], commandArr[2], user);

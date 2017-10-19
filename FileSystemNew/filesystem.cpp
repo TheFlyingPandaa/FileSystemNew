@@ -48,7 +48,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 			//}
 
 			
-			mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char));
+			mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char), user);
 			mMemblockDevice.writeBlock(blockArray[0], newString, user);
 			std::cout << "DEBUG_MSG: it finnished" << std::endl;
 			delete[] blockArray;
@@ -87,7 +87,7 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 				blocks[amountBlocks -1][i] = data[i + (512 * (amountBlocks - 1))];
 			}
 
-			mapController->addFile(fileName, amountBlocks, blockArray, data.size() * sizeof(char));
+			mapController->addFile(fileName, amountBlocks, blockArray, data.size() * sizeof(char), user);
 			
 			for (int i = 0; i < amountBlocks; i++) {
 				mMemblockDevice.writeBlock(blockArray[i], blocks[i], user);
@@ -162,18 +162,18 @@ int FileSystem::amountOfBlocksFree() const
 	return mMemblockDevice.spaceLeft();
 }
 
-void FileSystem::saveFileSystem()
+void FileSystem::saveFileSystem(const char * path)
 {
 	//TODO:: Implement filesystem tree save func
-	mapController->save("save.txt");
-	mMemblockDevice.saveBlocks();
+	mapController->save(path);
+	mMemblockDevice.saveBlocks(path);
 }
 
-void FileSystem::restoreFileSystem()
+void FileSystem::restoreFileSystem(const char * path)
 {
 	//TODO:: Implement filesystem tree read func
-	mapController->load("save.txt");
-	mMemblockDevice.readSavedBlocks();
+	mapController->load(path);
+	mMemblockDevice.readSavedBlocks(path);
 }
 
 
@@ -189,9 +189,9 @@ void FileSystem::mkdir(const std::string & mapName)
 	mapController->createMap(mapName);
 }
 
-void FileSystem::rm(const std::string & mapName)
+void FileSystem::rm(const std::string & mapName, const std::string & user)
 {
-	mapController->rm(mapName);
+	mapController->rm(mapName, user);
 }
 
 void FileSystem::cd(const std::string & mapName)

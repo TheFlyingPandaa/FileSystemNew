@@ -44,10 +44,10 @@ public:
 
 	void createMap(const std::string & name);
 
-	void addFile(const std::string & name, int nrOfBlocks, int byts = 0);
-	void addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize = 0);
+	void addFile(const std::string & name, int nrOfBlocks, int byts = 0, const std::string & user = "NULL");
+	void addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize = 0, const std::string & user = "NULL");
 
-	void rm(const std::string & name);
+	void rm(const std::string & name, const std::string & user);
 
 	void goToMap(const std::string & name);
 	//Syntax: (/)map0/map1/file
