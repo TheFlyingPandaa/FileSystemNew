@@ -65,7 +65,7 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int bytes,
 }
 void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blocks, int fileSize, const std::string & user)
 {
-	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty()) {
+	if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find('/') > name.size()) {
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
 			current->addFile(name, nrOfBlocks, nBlocks, fileSize, user);
@@ -76,6 +76,26 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 		blocks = new int[nrOfBlocks];
 		for (int i = 0; i < nrOfBlocks; i++)
 			blocks[i] = nBlocks[i];
+	}
+	else if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find('/') < name.size()) {
+
+		std::string * path = new std::string[64];
+
+		int size = this->splitPath(name, path);
+
+		int * nBlocks = this->getBlocks(nrOfBlocks);
+		if (nBlocks != nullptr) {
+			current->addFile(path[size], nrOfBlocks, nBlocks, fileSize, user);
+			this->blockesUsed += nrOfBlocks;
+		}
+		if (blocks != nullptr)
+			delete[] blocks;
+		blocks = new int[nrOfBlocks];
+		for (int i = 0; i < nrOfBlocks; i++)
+			blocks[i] = nBlocks[i];		
+
+		delete[] path;
+
 	}
 }
 

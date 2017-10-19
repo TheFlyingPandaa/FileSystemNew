@@ -26,7 +26,6 @@
     <ShowAsAssociation>
       <Field Name="mMemblockDevice" />
       <Field Name="mapController" />
-      <Field Name="openBlocks" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Map">
@@ -35,10 +34,6 @@
       <HashCode>DAAAgACRAhBABACBAADgABQAAAAIAAQYAAgMAgAAAwA=</HashCode>
       <FileName>Map.h</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="vFiles" />
-      <Field Name="vMap" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="MapController">
     <Position X="6.75" Y="2.5" Width="1.5" />
@@ -67,11 +62,7 @@
     </TypeIdentifier>
   </Class>
   <Struct Name="File">
-    <Position X="10.5" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+    <Position X="10.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAEAAiAAEAAAAAAAQA=</HashCode>
       <FileName>Map.h</FileName>
