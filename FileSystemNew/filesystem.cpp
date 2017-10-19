@@ -99,6 +99,81 @@ void FileSystem::createFile(const std::string & fileName, const std::string user
 	}
 }
 
+void FileSystem::createFileNoInp(const std::string & fileName, const std::string & data, const std::string user)
+{
+
+	int * blockArray = nullptr;
+
+	if (data.size() <= 512)
+	{
+
+		int amount = data.size();
+
+		std::string newString = "0";
+		newString.resize(512, 0);
+		//std::string newString = "sarkrrpxgmvpmtqeutzoealpqihtnpjpjypwotltkimawhwrchhuayrytavvsrdbrgxvhyupywlcsdlmljiljbsanqhwbddkiyjkugakeqkpipodzspuripwiogudgpuhzkhniiavrkwvjqnrpgavzbquyhiwcvitywicivuvjbtpbdbzqnizzxrwadmmsgmmunymdzdfulhcffvwnsmijrouiafntujcirjkwelasbeumiyzthsqnovlgpcbchxrpviogjqfemmhnqnweglbuenyfgwggpnxtdvwkrorexggqqqpnzmxvkcnvzijafdmaerfsqidytdtklgxudsvovkghpalvdmajhcqaelrssidwtotixipjxiuyparxehxjdmeiozdtzcmkocjemalywwwbjchilespgwgdlmthcibyfqqvxoaxbnxhqkrsmnrmrkryktelrzxphjzhktoegbnitwlvvnczusgzoivzcrihekanqasuuqptylfztm";
+
+		for (int i = 0; i < data.size(); i++)
+		{
+			newString[i] = data[i];
+		}
+		//for (int i = amount; i < 512; i++)
+		//{
+		//	newString[i] = 0;
+		//}
+
+
+		mapController->addFile(fileName, 1, blockArray, data.size() * sizeof(char), user);
+		mMemblockDevice.writeBlock(blockArray[0], newString, user);
+		std::cout << "DEBUG_MSG: it finnished" << std::endl;
+		delete[] blockArray;
+	}
+	else
+	{
+
+		int amountBlocks = data.size() / 512;
+		if (data.size() % 512 != 0)
+		{
+			amountBlocks++;
+		}
+
+
+		std::string * blocks = new std::string[amountBlocks];
+
+		for (int i = 0; i < amountBlocks; i++)
+		{
+			blocks[i] = "0";
+		}
+		for (int i = 0; i < amountBlocks; i++) {
+			blocks[i].resize(512, 0);
+		}
+
+		//TODO:: Fix this: probs fixed
+
+		for (int i = 0; i < amountBlocks - 1; i++) {
+			for (int j = 0; j < 512; j++)
+			{
+				blocks[i][j] = data[j + (512 * i)];
+			}
+		}
+		int tempSize = data.size() - (amountBlocks - 1) * 512;
+		for (int i = 0; i < tempSize; i++)
+		{
+			blocks[amountBlocks - 1][i] = data[i + (512 * (amountBlocks - 1))];
+		}
+
+		mapController->addFile(fileName, amountBlocks, blockArray, data.size() * sizeof(char), user);
+
+		for (int i = 0; i < amountBlocks; i++) {
+			mMemblockDevice.writeBlock(blockArray[i], blocks[i], user);
+		}
+		delete[] blockArray;
+		delete[] blocks;
+
+	}
+
+}
+
 void FileSystem::createCopyFile(const std::string & oldName, const std::string & newFile, const std::string & user)
 {
 	int * blockArray = nullptr;
@@ -225,5 +300,85 @@ void FileSystem::mv(const std::string & fileName, const std::string & destFile, 
 		mapController->rm(fileName, user);
 	}
 	
+
+}
+
+void FileSystem::append(const std::string & filename, const std::string & destFile, const std::string & user)
+{
+	if (filename != destFile)
+	{
+		int * blockArray = nullptr;
+
+		File * file1 = mapController->getFile(filename);
+		File * file2 = mapController->getFile(destFile);
+		int f1 = file1->nrOfBlocks;
+		int f2 = file2->nrOfBlocks;
+		Block * blocks1 = new Block[file1->nrOfBlocks];
+		Block * blocks2 = new Block[file2->nrOfBlocks];
+		
+		for (int i = 0; i < file1->nrOfBlocks; i++)
+		{
+			blocks1[i] = mMemblockDevice.readBlock(file1->fileBlocks[i]);
+			
+		}
+		for (int i = 0; i < file2->nrOfBlocks; i++)
+		{
+			blocks2[i] = mMemblockDevice.readBlock(file2->fileBlocks[i]);
+		}
+
+		std::string newString = std::string(file1->bytes + file2->bytes, 'a');
+		std::string * block1 = new std::string[f1];
+		for (int i = 0; i < f1; i++)
+		{
+			block1[i] = blocks1[i].toString();
+		}
+		std::string * block2 = new std::string[f1];
+		for (int i = 0; i < f2; i++)
+		{
+			block2[i] = blocks2[i].toString();
+		}
+		if (file1->bytes + file2->bytes < 512)
+		{
+			for (int i = 0; i < file1->bytes; i++)
+			{
+				newString[i] = block1[0][i];
+			}
+			for (int i = 0; i<  file2->bytes; i++)
+			{
+				newString[i + file1->bytes] = block2[0][i];
+			}
+		}
+		else
+		{
+			int counter = 0;
+			for (int i = 0; i < f1; i++)
+			{
+				for (int j = 0; j < 512; j++)
+				{
+					if (counter <= file1->bytes)
+					{
+						newString[j + (512 * i)] = block1[i][j];
+					}
+					counter++;
+				}
+			}
+			counter = 0;
+			for (int i = 0; i < f2; i++)
+			{
+				for (int j= 0; j < 512; j++)
+				{
+					newString[file1->bytes + j + (512 * i)] = block2[i][j];
+				}
+			}
+		}
+		mapController->rm(destFile, user);
+		
+		createFileNoInp(destFile, newString, user);
+		
+		
+
+		delete[] blockArray;
+		//delete[] blocks;
+	}
 
 }

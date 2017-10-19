@@ -29,6 +29,8 @@ public:
     // createFile(...)
 	void createFile(const std::string &fileName, const std::string user);
 
+	void createFileNoInp(const std::string & fileName, const std::string & data, const std::string user);
+
 	void createCopyFile(const std::string &oldName, const std::string & newFile, const std::string & user);
 
 	/*Reads a block and outputs to user*/
@@ -70,6 +72,8 @@ public:
 	std::string ls();
 
 	void mv(const std::string & fileName, const std::string & destFile, const std::string & user);
+
+	void append(const std::string & filename, const std::string & destFile, const std::string & user);
 };
 
 #endif // FILESYSTEM_H
