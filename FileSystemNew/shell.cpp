@@ -86,6 +86,7 @@ int main(void) {
             case 9: // append
                 break;
             case 10: // mv
+				fileSystem.mv(commandArr[1], commandArr[2], user);
                 break;
             case 11: // mkdir
 				fileSystem.mkdir(commandArr[1]);

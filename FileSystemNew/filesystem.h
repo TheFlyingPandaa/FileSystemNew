@@ -68,6 +68,8 @@ public:
 	void cd(const std::string & mapName);
 	std::string pwd();
 	std::string ls();
+
+	void mv(const std::string & fileName, const std::string & destFile, const std::string & user);
 };
 
 #endif // FILESYSTEM_H

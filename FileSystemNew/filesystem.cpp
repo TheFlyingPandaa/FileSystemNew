@@ -138,7 +138,6 @@ Block * FileSystem::readFile(const std::string user, const std::string & fileNam
 
 void FileSystem::formatSystem()
 {
-	//TODO:: Insert filesytem reset	
 
 	mMemblockDevice.reset();
 	this->mapController->~MapController(); //Ja detta ser ut som en "Ghetto lösning"
@@ -207,4 +206,16 @@ std::string FileSystem::pwd()
 std::string FileSystem::ls()
 {
 	return mapController->ls();
+}
+
+void FileSystem::mv(const std::string & fileName, const std::string & destFile, const std::string & user)
+{
+	if (fileName != destFile)
+	{
+		createCopyFile(fileName, destFile, user);
+
+		mapController->rm(fileName);
+	}
+	
+
 }
