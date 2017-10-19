@@ -77,11 +77,13 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 		for (int i = 0; i < nrOfBlocks; i++)
 			blocks[i] = nBlocks[i];
 	}
-	else if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find('/') < name.size()) {
+	else if (!current->fileExist(name) && !current->mapExist(name) && !name.empty() && name.find('/') < name.length()) {
 
 		std::string * path = new std::string[64];
 
 		int size = this->splitPath(name, path);
+
+		this->goToMap(name);
 
 		int * nBlocks = this->getBlocks(nrOfBlocks);
 		if (nBlocks != nullptr) {
@@ -92,8 +94,7 @@ void MapController::addFile(const std::string & name, int nrOfBlocks, int *& blo
 			delete[] blocks;
 		blocks = new int[nrOfBlocks];
 		for (int i = 0; i < nrOfBlocks; i++)
-			blocks[i] = nBlocks[i];		
-
+			blocks[i] = nBlocks[i];				
 		delete[] path;
 
 	}
@@ -400,4 +401,40 @@ int MapController::splitPath(const std::string & path, std::string *& buffert) c
 	}
 	return i;
 
+}
+
+std::string MapController::getName(const std::string & path) const
+{
+	std::string name;
+
+	int i = 0;
+	int index = path.length();
+
+	if (path[path.length()] == '/')
+		index = path.length() - 1;
+
+	while (index >= 0)
+	{
+		if (path[index] != '/')
+		{
+			name += path[index];
+		}
+		else
+		{
+			std::string ret;
+			for (int j = name.length(); j > -1; j--)
+			{
+				ret += name[j];
+			}
+			return ret;
+		}
+		index--;
+	}
+	std::string ret;
+	for (int j = name.length(); j > -1; j--)
+	{
+		ret += name[i];
+	}
+	return ret;
+	
 }
