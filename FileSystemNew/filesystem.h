@@ -49,10 +49,10 @@ public:
     // removeFolder(...);
 
 	/* Saves the hole fileSystem to a txt file*/
-	void saveFileSystem();
+	void saveFileSystem(const char * path);
 
 	/* Restores the hole filesystem from a txt file*/
-	void restoreFileSystem();
+	void restoreFileSystem(const char * path);
 
     /* Function will move the current location to a specified location in the filesystem */
     // goToFolder(...);
@@ -64,7 +64,7 @@ public:
 
 	//-----------------------------------	Map Controller Functions
 	void mkdir(const std::string & mapName);
-	void rm(const std::string & mapName);
+	void rm(const std::string & mapName, const std::string & user);
 	void cd(const std::string & mapName);
 	std::string pwd();
 	std::string ls();

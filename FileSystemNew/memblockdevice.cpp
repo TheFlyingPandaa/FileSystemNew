@@ -119,11 +119,12 @@ void MemBlockDevice::singleReset(const int block)
 	this->memBlocks[block].reset('0');
 }
 
-void MemBlockDevice::saveBlocks()
+void MemBlockDevice::saveBlocks(const char * path)
 {
 
 	std::ofstream file;
-	file.open("blocks.txt");
+	file.open(path, std::ios::app);
+	file << "\n";
 	for (int i = 0; i < 250; i++)
 	{
 		file << memBlocks[i].getOwner();
@@ -141,15 +142,22 @@ void MemBlockDevice::editReadWrite(int blockNr, bool readAll, bool writeAll)
 	memBlocks[blockNr].editReadWrite(readAll, writeAll);
 }
 
-void MemBlockDevice::readSavedBlocks()
+void MemBlockDevice::readSavedBlocks(const char * path)
 {
 	
 	std::ifstream file;
+	std::string walker = "0xINTETOMMY";
 	std::string owner;
 	std::string block;
 	file.open("blocks.txt");
+
 	if (file.is_open())
 	{
+		while (walker != "0xTOMMY\n")
+		{
+			std::getline(file, walker);
+			std::cout << walker << std::endl;
+		}
 		for (int i = 0; i < 250; i++)
 		{
 			std::getline(file, owner);

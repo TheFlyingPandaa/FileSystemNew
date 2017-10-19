@@ -9,15 +9,19 @@
 
 struct File
 {
-	File(const std::string& name, int n, int * file, int bytes) {
+	File(const std::string& name, int n, int * file, int bytes, std::string user) {
 		this->fileName = name;
 		this->nrOfBlocks = n;
 		this->fileBlocks = file;
 		this->bytes = bytes;
+		this->user = user;
 	}
+
 	int bytes;
 	int nrOfBlocks;
 	int * fileBlocks;
+
+	std::string user;
 	std::string fileName;
 };
 
@@ -55,7 +59,7 @@ public:
 	std::vector<File *> getFiles() const;
 	File * getFile(const int & index);
 
-	void addFile(const std::string& fileName, int nrOfBlocks, int * block, int bytes);
+	void addFile(const std::string& fileName, int nrOfBlocks, int * block, int bytes, const std::string & user);
 	void removeFile(const std::string & fileName);
 
 	bool fileExist(const std::string & name) const;
