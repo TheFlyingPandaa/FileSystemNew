@@ -381,7 +381,7 @@ void FileSystem::append(const std::string & filename, const std::string & destFi
 		delete[] blocks1;
 		delete[] blocks2;
 		delete[] block1;
-		delete[] block1;
+		delete[] block2;
 	}
 
 }
