@@ -176,7 +176,18 @@ void FileSystem::createCopyFile(const std::string & oldName, const std::string &
 {
 	int * blockArray = nullptr;
 
-	File * file = mapController->getFile(oldName);
+	std::string filePath = mapController->pwd();
+	std::string removedRoot1 = "";
+	for (int i = 4; i < filePath.size(); i++)
+	{
+		removedRoot1 += filePath[i];
+	}
+	for (int i = 0; i < oldName.size(); i++)
+	{
+		removedRoot1 += oldName[i];
+	}
+	
+	File * file = mapController->getFile(removedRoot1);
 	Block * block = new Block[file->nrOfBlocks];
 	
 
@@ -201,7 +212,17 @@ void FileSystem::createCopyFile(const std::string & oldName, const std::string &
 Block * FileSystem::readFile(const std::string user, const std::string & fileName, int& size)
 {
 	std::cout << mMemblockDevice.getOwner(0) << std::endl;
-	File * f = mapController->getFile(fileName);
+	std::string filePath = mapController->pwd();
+	std::string removedRoot = "";
+	for (int i = 4; i < filePath.size(); i++)
+	{
+		removedRoot += filePath[i];
+	}
+	for (int i = 0; i < fileName.size(); i++)
+	{
+		removedRoot += fileName[i];
+	}
+	File * f = mapController->getFile(removedRoot);
 	Block * blocks = new Block[f->nrOfBlocks];
 	size = f->nrOfBlocks;
 	for (int i = 0; i < f->nrOfBlocks; i++)
@@ -301,9 +322,27 @@ void FileSystem::append(const std::string & filename, const std::string & destFi
 	if (filename != destFile)
 	{
 		int * blockArray = nullptr;
+		
+		std::string filePath = mapController->pwd();
+		std::string removedRoot1 = "";
+		std::string removedRoot2 = "";
+		for (int i = 4; i < filePath.size(); i++)
+		{
+			removedRoot1 += filePath[i];
+		}
+		removedRoot2 = removedRoot1;
+		for (int i = 0; i < filename.size(); i++)
+		{
+			removedRoot1 += filename[i];
+		}
+		for (int i = 0; i < destFile.size(); i++)
+		{
+			removedRoot2 += destFile[i];
+		}
 
-		File * file1 = mapController->getFile(filename);
-		File * file2 = mapController->getFile(destFile);
+
+		File * file1 = mapController->getFile(removedRoot1);
+		File * file2 = mapController->getFile(removedRoot2);
 		int f1 = file1->nrOfBlocks;
 		int f2 = file2->nrOfBlocks;
 		Block * blocks1 = new Block[file1->nrOfBlocks];
