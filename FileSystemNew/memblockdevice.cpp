@@ -149,11 +149,11 @@ void MemBlockDevice::readSavedBlocks(const char * path)
 	std::string walker = "0xINTETOMMY";
 	std::string owner;
 	std::string block;
-	file.open("blocks.txt");
+	file.open(path);
 
 	if (file.is_open())
 	{
-		while (walker != "0xTOMMY\n")
+		while (walker != "0xTOMMY''")
 		{
 			std::getline(file, walker);
 			

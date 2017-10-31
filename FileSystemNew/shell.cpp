@@ -67,9 +67,7 @@ int main(void) {
 				{
 					std::cout << blocks[i].toString();
 				}
-				std::cout << std::endl;
-
-				//std::cout << fileSystem.readFile(user, commandArr[1], i) << std::endl;
+				std::cout << std::endl;				
                 break;
             case 5: // createImage
 				fileSystem.saveFileSystem(commandArr[1].data());
