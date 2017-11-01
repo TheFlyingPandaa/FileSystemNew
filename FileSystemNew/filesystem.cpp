@@ -237,7 +237,7 @@ void FileSystem::formatSystem()
 {
 
 	mMemblockDevice.reset();
-	this->mapController->~MapController(); //Ja detta ser ut som en "Ghetto lösning"
+	delete this->mapController; //Ja detta ser ut som en "Ghetto lösning"
 	this->mapController = new MapController(250); //Men det ska var en legit väg att resata ett objekt
 
 }
@@ -268,6 +268,8 @@ void FileSystem::saveFileSystem(const char * path)
 void FileSystem::restoreFileSystem(const char * path)
 {
 	//TODO:: Implement filesystem tree read func
+	this->formatSystem();
+	//mMemblockDevice.reset();
 	mapController->load(path);
 	mMemblockDevice.readSavedBlocks(path);
 }

@@ -238,10 +238,8 @@ void MapController::save(const char * path)
 
 void MapController::load(const char * path)
 {
-	for (size_t i = 0; i < totMaps; i++)
-	{
-		delete maps[i];
-	}
+	root->removeEverything();
+	delete root;
 	maps = std::vector<Map *>();
 	totMaps = 0;
 
@@ -373,7 +371,11 @@ std::string MapController::getFiles() const
 
 std::string MapController::byteToKB(const int & bytes) const
 {
-	return std::to_string(bytes / 1000) + "." + std::to_string(bytes % 1000) + " KB";
+	//return std::to_string(bytes / 1000) + "." + std::to_string(bytes % 1000) + " K";
+	std::ostringstream out;
+	out << std::setprecision(2) << bytes / 100.0f << "K";
+	return out.str();
+	//return std::to_string(bytes / 100.0f) + "K";
 }
 
 void MapController::removeFile(const std::string & name)

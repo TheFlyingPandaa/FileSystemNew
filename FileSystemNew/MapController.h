@@ -3,6 +3,8 @@
 #include "Map.h"
 
 #include <fstream>
+#include <sstream>
+#include <iomanip>
 
 class MapController
 {
